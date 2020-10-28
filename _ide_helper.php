@@ -2530,6 +2530,7 @@
          */ 
         public static function routes($attributes = null)
         {
+
                         /** @var \Illuminate\Broadcasting\BroadcastManager $instance */
                         $instance->routes($attributes);
         }
