@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Sadegh\User\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 use Sadegh\User\Rules\ValidPassword;
