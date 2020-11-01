@@ -36,9 +36,12 @@
                 <span class="checkmark"></span>
             </label>
             <div class="recover-password">
-                <a href="recoverpassword.html">بازیابی رمز عبور</a>
+                <a href="{{ route('password.request') }}">بازیابی رمز عبور</a>
             </div>
         </div>
+
+
+
         <div class="form-footer">
             <a href="{{ route('register') }}">صفحه ثبت نام</a>
         </div>

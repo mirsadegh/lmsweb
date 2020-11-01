@@ -130,6 +130,9 @@ return [
     */
 
     'custom' => [
+        'verify_code' => [
+            'between' => 'کد وارد شده معتبر نمیباشد!'
+        ]
     ],
 
     /*

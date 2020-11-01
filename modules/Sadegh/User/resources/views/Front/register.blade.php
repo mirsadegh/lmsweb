@@ -3,7 +3,7 @@
 <form action="{{ route('register') }}" class="form" method="post">
     @csrf
     <a class="account-logo" href="index.html">
-        <img src="img/weblogo.png" alt="">
+        <img src="/img/weblogo.png" alt="">
     </a>
     <div class="form-content form-account">
         <input type="text" class="txt @error('name') is-invalid @enderror"

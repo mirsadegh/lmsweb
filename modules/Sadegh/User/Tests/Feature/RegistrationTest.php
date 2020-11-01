@@ -5,6 +5,7 @@ namespace Sadegh\User\Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Sadegh\User\Models\User;
+use Sadegh\User\Services\VerifyCodeService;
 use Tests\TestCase;
 
 class RegistrationTest extends TestCase
@@ -43,6 +44,34 @@ class RegistrationTest extends TestCase
 
         $response->assertRedirect(route('verification.notice'));
 
+    }
+
+    public function test_user_can_verify_account()
+    {
+        $user = User::create(
+            [
+                'name' => 'sadegh',
+                'email' => 'sadegh@gmail.com',
+                'password' => bcrypt('12@abA')
+            ]
+        );
+
+        $code = VerifyCodeService::generate();
+        VerifyCodeService::store($user->id,$code);
+
+        auth()->loginUsingId($user->id);
+
+        $this->assertAuthenticated();
+
+        $this->post(route('verification.verify'),[
+            'verify_code' => $code
+        ]);
+
+
+
+
+        $this->assertEquals(true,$user->fresh()->hasVerifiedEmail());
+        
     }
 
 
