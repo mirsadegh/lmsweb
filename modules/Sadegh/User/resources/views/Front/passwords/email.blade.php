@@ -23,6 +23,12 @@
             </span>
             @enderror
 
+           @error('not_email')
+            <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+
             <br>
             <button type="submit" class="btn btn-recoverpass">بازیابی</button>
         </div>

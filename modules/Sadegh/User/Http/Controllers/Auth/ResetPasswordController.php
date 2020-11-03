@@ -1,10 +1,12 @@
 <?php
 
 namespace Sadegh\User\Http\Controllers\Auth;
-
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Sadegh\User\Http\Requests\ChangePasswordRequest;
+use Sadegh\User\Services\UserService;
 
 class ResetPasswordController extends Controller
 {
@@ -31,10 +33,12 @@ class ResetPasswordController extends Controller
 
     public function showResetForm(Request $request)
     {
-        $token = $request->route()->parameter('token');
+        return view('User::Front.passwords.reset');
+    }
 
-        return view('User::Front.passwords.reset')->with(
-            ['token' => $token, 'email' => $request->email]
-        );
+    public function reset(ChangePasswordRequest $request)
+    {
+       UserService::changePassword(auth()->user() ,$request->password);
+        return redirect(route('home'));
     }
 }
