@@ -20,6 +20,10 @@
             <directory suffix="Test.php">./modules/Sadegh/User/Tests/Unit</directory>
         </testsuite>
 
+        <testsuite name="Feature">
+            <directory suffix="Test.php">./modules/Sadegh/Category/Tests/Feature</directory>
+        </testsuite>
+
 
 
     </testsuites>

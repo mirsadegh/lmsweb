@@ -1,8 +1,8 @@
 <?php
 
-namespace Database\Factories;
+namespace Sadegh\User\Database\Factories;
 
-use App\Models\User;
+use Sadegh\User\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 

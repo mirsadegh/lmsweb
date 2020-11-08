@@ -39,7 +39,9 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "Sadegh\\User\\": "modules/Sadegh/User/"
+            "Sadegh\\User\\": "modules/Sadegh/User/",
+            "Sadegh\\Dashboard\\": "modules/Sadegh/Dashboard/",
+            "Sadegh\\Category\\": "modules/Sadegh/Category/"
         }
     },
     "autoload-dev": {
