@@ -1,7 +1,7 @@
 @extends('Dashboard::master')
 
 @section('breadcrumb')
-    <li><a href="{{ route('categories.index') }}" title="دسته بندی">دسته بندی</a></li>
+    <li><a href="{{ route('role-permissions.index') }}" title="نقشهای کاربری">نقشهای کاربری</a></li>
 @endsection
 
 @section('content')
@@ -13,25 +13,32 @@
                     <thead role="rowgroup">
                     <tr role="row" class="title-row">
                         <th>شناسه</th>
-                        <th>نام دسته بندی</th>
-                        <th>نام انگلیسی دسته بندی</th>
-                        <th>دسته پدر</th>
+                        <th>نقش کاربری</th>
+                        <th>مجوز ها</th>
                         <th>عملیات</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($categories as $category)
+                    @foreach($roles as $role)
                         <tr role="row" class="">
-                            <td><a href="">{{ $category->id }}</a></td>
-                            <td><a href=""> {{ $category->title }}</a></td>
-                            <td>{{ $category->slug }}</td>
-                            <td>{{ $category->parent }}</td>
+                            <td><a href="">{{ $role->id }}</a></td>
+                            <td><a href=""> {{ $role->name }}</a></td>
+
+                            <td>
+                                <ul>
+                                    @foreach($role->permissions as $permission)
+                                        <li>@lang($permission->name)</li>
+                                    @endforeach
+                                </ul>
+
+
+                            </td>
                             <td>
                                 <a href=""
-                                   onclick="deleteItem(event,'{{ route('categories.destroy',$category->id) }}')"
+                                   onclick="deleteItem(event,'{{ route('role-permissions.destroy',$role->id) }}')"
                                    class="item-delete mlg-15" title="حذف"></a>
-                                <a href="" target="_blank" class="item-eye mlg-15" title="مشاهده"></a>
-                                <a href="{{ route('categories.edit',$category->id) }}" class="item-edit "
+
+                                <a href="{{ route('role-permissions.edit',$role->id) }}" class="item-edit "
                                    title="ویرایش"></a>
                             </td>
                         </tr>
@@ -41,15 +48,9 @@
             </div>
         </div>
         <div class="col-4 bg-white">
-            @include('Categories::create')
+            @include('RolePermissions::create')
         </div>
     </div>
 
 @endsection
-
-
-
-
-
-
 

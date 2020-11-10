@@ -1,5 +1,10 @@
 @extends('Dashboard::master')
 
+@section('breadcrumb')
+    <li><a href="{{ route('categories.index') }}" title="دسته بندی">دسته بندی</a></li>
+    <li><a href="#" title="ویرایش">ویرایش</a></li>
+@endsection
+
 @section('content')
     <div class="row no-gutters">
         <div class="col-6 bg-white">

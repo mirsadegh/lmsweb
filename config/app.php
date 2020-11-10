@@ -179,6 +179,7 @@ return [
         Sadegh\User\Providers\UserServiceProvider::class,
         Sadegh\Dashboard\Providers\DashboardServiceProvider::class,
         Sadegh\Category\Providers\CategoryServieceProvider::class,
+        Sadegh\RolePermissions\Providers\RolePermissionsServiceProvider::class,
 
     ],
 

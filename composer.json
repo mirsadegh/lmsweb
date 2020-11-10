@@ -14,7 +14,8 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
-        "laravel/ui": "^3.0"
+        "laravel/ui": "^3.0",
+        "spatie/laravel-permission": "^3.17"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.8",
@@ -41,7 +42,8 @@
             "Database\\Seeders\\": "database/seeders/",
             "Sadegh\\User\\": "modules/Sadegh/User/",
             "Sadegh\\Dashboard\\": "modules/Sadegh/Dashboard/",
-            "Sadegh\\Category\\": "modules/Sadegh/Category/"
+            "Sadegh\\Category\\": "modules/Sadegh/Category/",
+            "Sadegh\\RolePermissions\\": "modules/Sadegh/RolePermissions/"
         }
     },
     "autoload-dev": {

@@ -18,6 +18,7 @@ class CategoryController extends Controller
 
     public function index()
     {
+
         $categories = $this->repo->all();
         return view('Categories::index',compact('categories'));
     }
