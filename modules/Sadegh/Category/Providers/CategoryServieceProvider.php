@@ -17,7 +17,7 @@ class CategoryServieceProvider extends ServiceProvider
     {
         config()->set('sidebar.items.categories',
             [
-                "icon" => "i-categories",
+                "icon" => "i-courses",
                 "title" => "دسته بندی ها",
                 "url" => route('categories.index')
             ]);

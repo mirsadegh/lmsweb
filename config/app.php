@@ -180,6 +180,8 @@ return [
         Sadegh\Dashboard\Providers\DashboardServiceProvider::class,
         Sadegh\Category\Providers\CategoryServieceProvider::class,
         Sadegh\RolePermissions\Providers\RolePermissionsServiceProvider::class,
+        Sadegh\Course\Providers\CourseServiceProvider::class,
+        Sadegh\Media\Providers\MediaServiceProvider::class,
 
     ],
 
@@ -232,7 +234,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'Image' => Intervention\Image\Facades\Image::class
     ],
 
 ];

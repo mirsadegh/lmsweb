@@ -12,11 +12,7 @@
 
             <input id="email" type="text" class="txt-l txt @error('email') is-invalid @enderror" name="email" placeholder="ایمیل یا شماره موبایل" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
-            @error('email')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
+            <x-validation-error field="email"/>
 
 
             <input type="password" class="txt-l txt @error('password') is-invalid @enderror" placeholder="رمز عبور" name="password" required autocomplete="current-password">
