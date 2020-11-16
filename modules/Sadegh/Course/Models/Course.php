@@ -7,8 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Sadegh\Media\Models\Media;
 use Sadegh\User\Models\User;
 
+/**
+ * @property mixed confirmationStatuses
+ */
 class Course extends Model
 {
+
     protected $guarded = [];
     const TYPE_FREE = 'free';
     const TYPE_CASH = 'cash';
@@ -16,7 +20,14 @@ class Course extends Model
 
     const STATUS_COMPLETED = 'completed';
     const STATUS_NOT_COMPLETED = 'not-completed';
-    const STATUS_LOCKED = 'completed';
+    const STATUS_LOCKED = 'locked';
+
+    const CONFIRMATION_STATUS_ACCEPTED = 'accepted';
+    const CONFIRMATION_STATUS_REJECTED = 'rejected';
+    const CONFIRMATION_STATUS_PENDING = 'pending';
+
+
+    static $confirmationStatuses = [self::CONFIRMATION_STATUS_ACCEPTED , self::CONFIRMATION_STATUS_PENDING,self::CONFIRMATION_STATUS_REJECTED];
 
 
     static $statuses = [self::STATUS_COMPLETED, self::STATUS_NOT_COMPLETED, self::STATUS_LOCKED];

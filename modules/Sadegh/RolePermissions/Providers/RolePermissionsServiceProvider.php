@@ -1,7 +1,9 @@
 <?php
 namespace Sadegh\RolePermissions\Providers;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use Sadegh\RolePermissions\Models\Permission;
 
 class RolePermissionsServiceProvider extends ServiceProvider
 {
@@ -12,6 +14,10 @@ class RolePermissionsServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations/');
         $this->loadViewsFrom(__DIR__.'/../resources/views/','RolePermissions');
         $this->loadJsonTranslationsFrom(__DIR__.'/../resources/lang');
+
+        Gate::before(function ($user){
+            return $user->hasPermissionTo(Permission::PERMISSION_SUPER_ADMIN)? true :null;
+        });
 
     }
 

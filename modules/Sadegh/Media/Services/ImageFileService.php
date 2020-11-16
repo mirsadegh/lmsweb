@@ -8,7 +8,7 @@ use Intervention\Image\Facades\Image;
 
 class ImageFileService
 {
-    protected static $sizes = ['300','600','450'];
+    protected static $sizes = ['300','600'];
 
     public static function upload($file)
     {

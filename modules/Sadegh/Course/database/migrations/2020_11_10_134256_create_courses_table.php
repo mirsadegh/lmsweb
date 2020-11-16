@@ -25,6 +25,7 @@ class CreateCoursesTable extends Migration
             $table->string('percent',5);
             $table->enum('type',\Sadegh\Course\Models\Course::$types);
             $table->enum('status',\Sadegh\Course\Models\Course::$statuses);
+            $table->enum('confirmation_status',\Sadegh\Course\Models\Course::$confirmationStatuses);
             $table->longText('body')->nullable();
             $table->timestamps();
 

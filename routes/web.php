@@ -7,7 +7,7 @@ Route::get('/', function () {
 
 Route::get('/test', function () {
 //    \Spatie\Permission\Models\Permission::create(['name' => 'manage role_permissions']);
-    auth()->user()->givePermissionTo('manage role_permissions');
+    auth()->user()->givePermissionTo(\Sadegh\RolePermissions\Models\Permission::PERMISSION_SUPER_ADMIN);
      return auth()->user()->permissions;
 });
 

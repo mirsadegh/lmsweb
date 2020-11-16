@@ -31,11 +31,9 @@ class ForgotPasswordController extends Controller
         return view('User::Front.passwords.email');
     }
 
-    public function sendVerifyCodeEmail(SendResetPasswordVerifyCodeRequest $request)
+    public function sendVerifyCodeEmail(SendResetPasswordVerifyCodeRequest $request,UserRepo $userRepo)
     {
-
-
-        $user = resolve(UserRepo::class)->findByEmail($request->email);
+        $user = $userRepo->findByEmail($request->email);
 
         if ($user == null){
             return back()->withErrors(['not_email' => 'با این ایمیل ثبت نشده است!']);

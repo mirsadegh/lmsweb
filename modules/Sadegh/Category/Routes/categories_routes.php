@@ -1,5 +1,6 @@
 <?php
 
-Route::group(["namespace" => "Sadegh\Category\Http\Controllers",'middleware' =>['web','auth','verified']],function ($router){
-       $router->resource('categories','CategoryController')->middleware('permission:manage categories');
+Route::group(["namespace" => "Sadegh\Category\Http\Controllers",'middleware' =>['web','auth','verified']]
+    ,function ($router){
+       $router->resource('categories','CategoryController');
 });

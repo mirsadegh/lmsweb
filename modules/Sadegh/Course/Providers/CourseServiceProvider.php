@@ -6,8 +6,12 @@ namespace Sadegh\Course\Providers;
 
 
 use Database\Seeders\DatabaseSeeder;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Sadegh\Course\database\Seeds\RolePermissionTableSeeder;
+use Sadegh\Course\Models\Course;
+use Sadegh\Course\Policies\CoursePolicy;
+
 
 class CourseServiceProvider extends ServiceProvider
 {
@@ -20,6 +24,9 @@ class CourseServiceProvider extends ServiceProvider
         $this->loadJsonTranslationsFrom(__DIR__.'/../resources/lang/');
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang/',"Courses");
         DatabaseSeeder::$seeders[] = RolePermissionTableSeeder::class;
+        Gate::policy(Course::class,CoursePolicy::class);
+
+
     }
 
     public function boot()

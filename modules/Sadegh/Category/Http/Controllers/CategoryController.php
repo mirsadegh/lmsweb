@@ -5,6 +5,7 @@ namespace Sadegh\Category\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Sadegh\Category\Http\Requests\CategoryRequest;
+use Sadegh\Category\Models\Category;
 use Sadegh\Category\Repositories\CategoryRepo;
 use Sadegh\Category\Responses\AjaxResponses;
 
@@ -18,7 +19,7 @@ class CategoryController extends Controller
 
     public function index()
     {
-
+        $this->authorize('manage',Category::class);
         $categories = $this->repo->all();
         return view('Categories::index',compact('categories'));
     }
