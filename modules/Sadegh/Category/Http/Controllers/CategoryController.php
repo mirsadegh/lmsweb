@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Sadegh\Category\Http\Requests\CategoryRequest;
 use Sadegh\Category\Models\Category;
 use Sadegh\Category\Repositories\CategoryRepo;
-use Sadegh\Category\Responses\AjaxResponses;
+use Sadegh\Common\Responses\AjaxResponses;
 
 class CategoryController extends Controller
 {
@@ -26,12 +26,14 @@ class CategoryController extends Controller
 
     public function store(CategoryRequest $request)
     {
+        $this->authorize('manage',Category::class);
         $this->repo->store($request);
         return back();
     }
 
     public function edit($categoryId)
     {
+        $this->authorize('manage',Category::class);
         $category = $this->repo->findById($categoryId);
         $categories = $this->repo->allExceptById($categoryId);
         return view('Categories::edit',compact('category','categories'));
@@ -39,12 +41,14 @@ class CategoryController extends Controller
 
     public function update($categoryId ,CategoryRequest $request)
     {
+        $this->authorize('manage',Category::class);
         $this->repo->update($categoryId,$request);
         return back();
     }
 
     public function destroy($categoryId)
     {
+        $this->authorize('manage',Category::class);
         $this->repo->delete($categoryId);
         return AjaxResponses::successResponses();
     }

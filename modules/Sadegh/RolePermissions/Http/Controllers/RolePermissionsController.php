@@ -4,7 +4,7 @@ namespace Sadegh\RolePermissions\Http\Controllers;
 
 
 use App\Http\Controllers\Controller;
-use Sadegh\Category\Responses\AjaxResponses;
+use Sadegh\Common\Responses\AjaxResponses;
 use Sadegh\RolePermissions\Http\Requests\RoleRequest;
 use Sadegh\RolePermissions\Http\Requests\RoleUpdateRequest;
 use Sadegh\RolePermissions\Repositories\PermissionRepo;
@@ -26,6 +26,7 @@ class RolePermissionsController extends Controller
     
     public function index()
     {
+        $this->authorize('index',Role::class);
         $roles = $this->roleRepo->all();
         $permissions = $this->permissionRepo->all();
         return view('RolePermissions::index',compact('roles','permissions'));
@@ -33,11 +34,15 @@ class RolePermissionsController extends Controller
 
     public function store(RoleRequest $request)
     {
-      return $this->roleRepo->create($request);
+      $this->authorize('create',Role::class);
+      $this->roleRepo->create($request);
+
+      return redirect(route('role-permissons.index'));
     }
 
     public function edit($roleId)
     {
+      $this->authorize('edit',Role::class);
       $role =  $this->roleRepo->findById($roleId);
       $permissions = $this->permissionRepo->all();
       return view('RolePermissions::edit',compact('role','permissions'));
@@ -45,12 +50,14 @@ class RolePermissionsController extends Controller
 
     public function update(RoleUpdateRequest $roleUpdateRequest,$id)
     {
+        $this->authorize('edit',Role::class);
         $this->roleRepo->update($id,$roleUpdateRequest);
         return redirect(route('role-permissions.index'));
     }
 
     public function destroy($roleId)
     {
+        $this->authorize('delete',Role::class);
         $this->roleRepo->delete($roleId);
         return AjaxResponses::successResponses();
     }

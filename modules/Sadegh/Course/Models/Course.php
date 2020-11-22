@@ -4,6 +4,7 @@ namespace Sadegh\Course\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Sadegh\Category\Models\Category;
 use Sadegh\Media\Models\Media;
 use Sadegh\User\Models\User;
 
@@ -41,6 +42,11 @@ class Course extends Model
     public function teacher()
     {
         return $this->belongsTo(User::class,'teacher_id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 
 }

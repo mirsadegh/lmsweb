@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Sadegh\Category\Responses;
+namespace Sadegh\Common\Responses;
 
 
 use Illuminate\Http\Response;

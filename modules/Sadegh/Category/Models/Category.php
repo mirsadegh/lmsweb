@@ -4,6 +4,7 @@ namespace Sadegh\Category\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Sadegh\Course\Models\Course;
 
 class Category extends Model
 {
@@ -21,5 +22,10 @@ class Category extends Model
     public function subCategories()
     {
         return $this->hasMany(Category::class,'parent_id');
+    }
+
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
     }
 }

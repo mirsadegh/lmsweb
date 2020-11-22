@@ -4,6 +4,7 @@
 namespace Sadegh\Media\Services;
 
 
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
 class ImageFileService
@@ -14,11 +15,13 @@ class ImageFileService
     {
         $filename = uniqid();
         $extension = $file->getClientOriginalExtension();
-        $dir = 'app\public\\';
-        $file->move(storage_path($dir),$filename . '.' . $extension);
-        $path = $dir. '\\'. $filename . '.' . $extension;
+        $dir = 'public\\';
+        Storage::putFileAs($dir , $file , $filename . '.' . $extension);
 
-        return self::resize(storage_path($path) , $dir , $filename , $extension);
+//        $file->move(storage_path($dir),$filename . '.' . $extension);
+        $path = $dir. $filename . '.' . $extension;
+
+        return self::resize(Storage::path($path) , $dir , $filename , $extension);
 
 
     }
@@ -31,7 +34,8 @@ class ImageFileService
             $imgs[$size] =  $filename . '_'. $size. '.'. $extension;
             $img->resize($size,null,function ($aspect){
                 $aspect->aspectRatio();
-            })->save(storage_path($dir). $filename . '_'. $size. '.'. $extension);
+            })
+                ->save(Storage::path($dir). $filename . '_'. $size. '.'. $extension);
         }
 
         return $imgs;
@@ -41,7 +45,7 @@ class ImageFileService
     public static function delete($media)
     {
         foreach ($media->files as $file){
-            \Storage::delete('public\\'. $file);
+            Storage::delete('public\\'. $file);
         }
     }
 

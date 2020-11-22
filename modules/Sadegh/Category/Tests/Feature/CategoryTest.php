@@ -19,17 +19,14 @@ class CategoryTest extends TestCase
 
     public function test_permitted_user_can_see_categories_panel()
     {
-
+        $this->withoutExceptionHandling();
         $this->actionAsAdmin();
-        $this->seed(RolePermissionTableSeeder::class);
-        auth()->user()->givePermissionTo(Permission::PERMISSION_MANAGE_CATEGORIES);
         $this->get(route('categories.index'))->assertOk();
-
     }
     public function test_normal_user_can_not_see_categories_panel()
     {
 
-        $this->actionAsAdmin();
+        $this->actionAsUser();
         $this->get(route('categories.index'))->assertStatus(403);
 
     }
@@ -38,8 +35,6 @@ class CategoryTest extends TestCase
     {
         $this->withoutExceptionHandling();
         $this->actionAsAdmin();
-        $this->seed(RolePermissionTableSeeder::class);
-        auth()->user()->givePermissionTo(Permission::PERMISSION_MANAGE_CATEGORIES);
         $this->createCategory();
 
         $this->assertEquals(1, Category::all()->count());
@@ -51,8 +46,6 @@ class CategoryTest extends TestCase
         $newTitle = "assdddff";
         $this->withoutExceptionHandling();
         $this->actionAsAdmin();
-        $this->seed(RolePermissionTableSeeder::class);
-        auth()->user()->givePermissionTo(Permission::PERMISSION_MANAGE_CATEGORIES);
         $this->createCategory();
         $this->assertEquals(1, Category::all()->count());
         $this->patch(route('categories.update', 1), ['title' => $newTitle, "slug" => $this->faker]);
@@ -63,8 +56,6 @@ class CategoryTest extends TestCase
     public function test_user_can_delete_category()
     {
         $this->actionAsAdmin();
-        $this->seed(RolePermissionTableSeeder::class);
-        auth()->user()->givePermissionTo(Permission::PERMISSION_MANAGE_CATEGORIES);
         $this->createCategory();
         $this->assertEquals(1, Category::all()->count());
 
@@ -73,20 +64,27 @@ class CategoryTest extends TestCase
 
     public function actionAsAdmin()
     {
-        $user = User::create(
-            [
-                'name' => $this->faker->name,
-                'email' => $this->faker->safeEmail,
-                'mobile' => '987655564',
-                'password' => bcrypt('12@abA')
-            ]
-        );
+        $user = User::create([
+            'name' => $this->faker->name,
+            'email' => $this->faker->unique()->safeEmail,
+            'email_verified_at' => now(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'remember_token' => Str::random(10),
+        ]);
         $this->actingAs($user);
+        $this->seed(RolePermissionTableSeeder::class);
+        auth()->user()->givePermissionTo(Permission::PERMISSION_MANAGE_CATEGORIES);
+    }
+
+    public function actionAsUser()
+    {
+        $this->actingAs(factory(User::class)->create());
+        $this->seed(RolePermissionTableSeeder::class);
     }
 
     private function createCategory()
     {
-        $this->post(route('categories.store'), ['title' => $this->faker->word, "slug" => $this->faker]);
+      return  $this->post(route('categories.store'), ['title' => $this->faker->word, "slug" => $this->faker]);
     }
 
 
