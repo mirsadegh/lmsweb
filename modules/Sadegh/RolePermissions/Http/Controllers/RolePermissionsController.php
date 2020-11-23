@@ -37,7 +37,7 @@ class RolePermissionsController extends Controller
       $this->authorize('create',Role::class);
       $this->roleRepo->create($request);
 
-      return redirect(route('role-permissons.index'));
+      return redirect(route('role-permissions.index'));
     }
 
     public function edit($roleId)
