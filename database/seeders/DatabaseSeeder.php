@@ -10,15 +10,9 @@ class DatabaseSeeder extends Seeder
 
     public function run()
     {
-
         foreach (self::$seeders as $seeder){
             $this->call($seeder);
         }
-
-
 //         \App\Models\User::factory(10)->create();
-
-
-
     }
 }

@@ -5,7 +5,7 @@ namespace Sadegh\Course\Providers;
 
 
 
-use Database\Seeders\DatabaseSeeder;
+
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Sadegh\Course\database\Seeds\RolePermissionTableSeeder;
@@ -23,7 +23,7 @@ class CourseServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->loadJsonTranslationsFrom(__DIR__.'/../resources/lang/');
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang/',"Courses");
-        DatabaseSeeder::$seeders[] = RolePermissionTableSeeder::class;
+
         Gate::policy(Course::class,CoursePolicy::class);
 
 

@@ -176,10 +176,10 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        Sadegh\RolePermissions\Providers\RolePermissionsServiceProvider::class,
         Sadegh\User\Providers\UserServiceProvider::class,
         Sadegh\Dashboard\Providers\DashboardServiceProvider::class,
         Sadegh\Category\Providers\CategoryServieceProvider::class,
-        Sadegh\RolePermissions\Providers\RolePermissionsServiceProvider::class,
         Sadegh\Course\Providers\CourseServiceProvider::class,
         Sadegh\Media\Providers\MediaServiceProvider::class,
         Sadegh\Common\Providers\CommonServiceProvider::class,

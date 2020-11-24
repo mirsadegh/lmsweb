@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Home
- * Date: 11/23/2020
- * Time: 11:50 AM
- */
 
 namespace Sadegh\Common\Providers;
 

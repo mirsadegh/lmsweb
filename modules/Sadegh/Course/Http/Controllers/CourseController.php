@@ -7,7 +7,7 @@ namespace Sadegh\Course\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Sadegh\Category\Repositories\CategoryRepo;
 use Sadegh\Common\Responses\AjaxResponses;
-use Sadegh\Course\Http\Requests\CourseRequest;
+use Sadegh\Course\Http\Requests\UpdateUserRequest;
 use Sadegh\Course\Models\Course;
 use Sadegh\Course\Repositories\CourseRepo;
 use Sadegh\Media\Providers\MediaServiceProvider;
@@ -32,7 +32,7 @@ class CourseController extends Controller
         return view('Courses::create', compact('teachers', 'categories'));
     }
 
-    public function store(CourseRequest $request, CourseRepo $courseRepo)
+    public function store(UpdateUserRequest $request, CourseRepo $courseRepo)
     {
 
         $request->request->add(['banner_id' => MediaFileServiece::upload($request->file('image'))->id]);
@@ -51,7 +51,7 @@ class CourseController extends Controller
 
     }
 
-    public function update($id, CourseRequest $request, CourseRepo $courseRepo)
+    public function update($id, UpdateUserRequest $request, CourseRepo $courseRepo)
     {
         $course = $courseRepo->findById($id);
         $this->authorize('edit',$course);

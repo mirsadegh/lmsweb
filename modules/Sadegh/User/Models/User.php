@@ -3,12 +3,13 @@
 namespace Sadegh\User\Models;
 
 
-
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Sadegh\Media\Models\Media;
+use Sadegh\RolePermissions\Models\Role;
 use Sadegh\User\Notifications\ResetPasswordRequestNotification;
 use Sadegh\User\Notifications\verifyMailNotification;
 use Spatie\Permission\Traits\HasRoles;
@@ -17,6 +18,26 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
     use HasRoles;
+
+    const STATUS_ACTIVE = "active";
+    const STATUS_INACTIVE = "inactive";
+    const STATUS_BAN = "ban";
+
+    public static $statuses = [
+        self::STATUS_ACTIVE,
+        self::STATUS_INACTIVE,
+        self::STATUS_BAN,
+    ];
+
+    public static $defaultUser =
+        [
+          [
+              'name'     => 'Admin',
+              'email'    => 'admin@gmail.com',
+              'password' => 'demo',
+              'role'     => Role::ROLE_SUPER_ADMIN,
+          ],
+        ];
 
     /**
      * The attributes that are mass assignable.
@@ -51,15 +72,19 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function sendEmailVerificationNotification()
     {
-       $this->notify(new verifyMailNotification());
+        $this->notify(new verifyMailNotification());
     }
 
     public function sendResetPasswordRequestNotification()
     {
-       $this->notify(new ResetPasswordRequestNotification());
+        $this->notify(new ResetPasswordRequestNotification());
     }
 
 
+    public function image()
+    {
+        return $this->belongsTo(Media::class, 'image_id');
+    }
 
 
 }

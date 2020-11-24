@@ -1,10 +1,11 @@
 <?php
 
-namespace Sadegh\Course\database\Seeds;
+namespace Sadegh\RolePermissions\database\Seeds;
 
 use Illuminate\Database\Seeder;
+use Sadegh\RolePermissions\Models\Role;
 use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
+
 
 class RolePermissionTableSeeder extends Seeder
 {
@@ -18,7 +19,6 @@ class RolePermissionTableSeeder extends Seeder
         foreach (\Sadegh\RolePermissions\Models\Permission::$permissions as $permission) {
             Permission::findOrCreate($permission);
         }
-
 
         foreach (\Sadegh\RolePermissions\Models\Role::$roles as $name => $permissions){
             Role::findOrCreate($name)->givePermissionTo($permissions);

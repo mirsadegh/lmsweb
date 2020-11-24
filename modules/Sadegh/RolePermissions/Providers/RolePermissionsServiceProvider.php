@@ -1,8 +1,10 @@
 <?php
 namespace Sadegh\RolePermissions\Providers;
 
+use Database\Seeders\DatabaseSeeder;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use Sadegh\RolePermissions\database\Seeds\RolePermissionTableSeeder;
 use Sadegh\RolePermissions\Models\Permission;
 use Sadegh\RolePermissions\Models\Role;
 use Sadegh\RolePermissions\Policies\RolePermissionPolicy;
@@ -16,6 +18,7 @@ class RolePermissionsServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations/');
         $this->loadViewsFrom(__DIR__.'/../resources/views/','RolePermissions');
         $this->loadJsonTranslationsFrom(__DIR__.'/../resources/lang');
+        DatabaseSeeder::$seeders[] = RolePermissionTableSeeder::class;
         Gate::policy(Role::class , RolePermissionPolicy::class);
         Gate::before(function ($user){
             return $user->hasPermissionTo(Permission::PERMISSION_SUPER_ADMIN)? true :null;
