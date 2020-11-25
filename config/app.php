@@ -182,7 +182,7 @@ return [
         Sadegh\Category\Providers\CategoryServieceProvider::class,
         Sadegh\Course\Providers\CourseServiceProvider::class,
         Sadegh\Media\Providers\MediaServiceProvider::class,
-        Sadegh\Common\Providers\CommonServiceProvider::class,
+
 
     ],
 

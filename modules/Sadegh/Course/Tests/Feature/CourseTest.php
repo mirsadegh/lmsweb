@@ -8,7 +8,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Sadegh\Category\Models\Category;
-use Sadegh\Course\database\Seeds\RolePermissionTableSeeder;
+use Sadegh\RolePermissions\database\Seeds\RolePermissionTableSeeder;
 use Sadegh\Course\Models\Course;
 use Sadegh\RolePermissions\Models\Permission;
 use Sadegh\User\Models\User;

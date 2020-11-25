@@ -1,0 +1,20 @@
+{
+  "name": "sadegh/common",
+  "autoload": {
+    "psr-4": {
+      "Sadegh\\Common\\": "src/"
+    },
+    "files": [
+      "src/helpers.php"
+    ]
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "\\Sadegh\\Common\\Providers\\CommonServiceProvider"
+      ]
+    }
+  }
+}
+
+

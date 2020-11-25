@@ -4,6 +4,7 @@
 namespace Sadegh\User\Providers;
 
 
+use Sadegh\User\Http\Middleware\StoreUserIp;
 use Database\Seeders\DatabaseSeeder;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -21,21 +22,24 @@ class UserServiceProvider extends ServiceProvider
         $this->loadFactoriesFrom(__DIR__.'/../Database/factories');
         $this->loadViewsFrom(__DIR__.'/../resources/views','User');
         $this->loadJsonTranslationsFrom(__DIR__.'/../resources/lang');
-       config()->set('auth.providers.users.model', User::class);
-       Gate::policy(User::class,UserPolicy::class);
+
+        //for register middleware
+        $this->app['router']->pushMiddlewareToGroup('web',StoreUserIp::class);
+
+
+        config()->set('auth.providers.users.model', User::class);
+        Gate::policy(User::class,UserPolicy::class);
         DatabaseSeeder::$seeders[] = UsersTableSeeder::class;
     }
 
     public function boot()
     {
-
         config()->set('sidebar.items.users',
             [
                 "icon" => "i-users",
                 "title" => "کاربران",
                 "url" => route('users.index')
             ]);
-
 
     }
 }

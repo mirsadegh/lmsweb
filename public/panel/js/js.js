@@ -219,7 +219,12 @@ function updateConfirmationStatus(event , route , message , status , field ='con
     if (confirm(message)) {
         $.post(route, {_method: "PATCH", _token: $('meta[name="_token"]').attr('content')})
             .done(function (response) {
-               $(event.target).closest('tr').find('td.'+ field).text(status);
+                if (status = "تایید شده" ){
+
+                    $(event.target).closest('tr').find('td.'+ field).html("<span class='text-success'>" + status + "</span>");
+                }else {
+                    $(event.target).closest('tr').find('td.'+ field).html("<span class='text-error'>" + status + "</span>");
+                }
                 $.toast({
                     heading: 'عملیات موفق',
                     text: response.message,

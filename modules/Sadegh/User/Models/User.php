@@ -8,6 +8,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Sadegh\Course\Models\Course;
 use Sadegh\Media\Models\Media;
 use Sadegh\RolePermissions\Models\Role;
 use Sadegh\User\Notifications\ResetPasswordRequestNotification;
@@ -84,6 +85,12 @@ class User extends Authenticatable implements MustVerifyEmail
     public function image()
     {
         return $this->belongsTo(Media::class, 'image_id');
+    }
+
+
+    public function courses()
+    {
+        return $this->hasMany(Course::class,'teacher_id');
     }
 
 

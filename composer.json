@@ -11,12 +11,12 @@
         "php": "^7.3",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
-        "fzaninotto/faker": "^1.9",
         "guzzlehttp/guzzle": "^7.0.1",
         "intervention/image": "^2.5",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
+        "sadegh/common": "dev-master",
         "spatie/laravel-permission": "^3.17"
     },
     "require-dev": {
@@ -26,6 +26,14 @@
         "nunomaduro/collision": "^5.0",
         "phpunit/phpunit": "^9.3"
     },
+
+    "repositories":[
+        {
+            "type": "path",
+            "url": "./modules/Sadegh/Common/"
+        }
+    ],
+
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
@@ -39,9 +47,7 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "Sadegh\\Common\\": "modules/Sadegh/Common/",
             "Sadegh\\User\\": "modules/Sadegh/User/",
             "Sadegh\\Dashboard\\": "modules/Sadegh/Dashboard/",
             "Sadegh\\Category\\": "modules/Sadegh/Category/",

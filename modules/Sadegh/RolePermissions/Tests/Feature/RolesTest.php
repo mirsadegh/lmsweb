@@ -7,7 +7,7 @@ namespace Sadegh\RolePermissions\Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Sadegh\Category\Models\Category;
-use Sadegh\Course\database\Seeds\RolePermissionTableSeeder;
+use Sadegh\RolePermissions\database\Seeds\RolePermissionTableSeeder;
 use Sadegh\RolePermissions\Models\Permission;
 use Sadegh\RolePermissions\Models\Role;
 use Sadegh\User\Models\User;
