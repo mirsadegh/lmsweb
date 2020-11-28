@@ -18,6 +18,7 @@
                         <th>عنوان</th>
                         <th>مدرس</th>
                         <th>قیمت</th>
+                        <th>جزییات</th>
                         <th> درصد مدرس</th>
                         <th>وضیعت</th>
                         <th>وضیعت تایید</th>
@@ -33,6 +34,8 @@
                             <td><a href=""> {{ $course->title }}</a></td>
                             <td><a href=""> {{ $course->teacher->name }}</a></td>
                             <td>{{ $course->price }}</td>
+                            <td><a href="{{ route('courses.details',$course->id) }}">مشاهده</a></td>
+                            
                             <td>{{ $course->percent }}</td>
                             <td class="status">@lang($course->status)</td>
                             <td class="confirmation_status">@lang($course->confirmation_status)</td>
@@ -54,7 +57,6 @@
 
                                 <a href="" onclick="updateConfirmationStatus(event,'{{ route('courses.lock',$course->id) }}','آیا از قفل کردن این آیتم اطمینان دارید؟'
                                         ,'قفل شده','status')" class="item-lock mlg-15" title="قفل">
-
                                 </a>
 
 

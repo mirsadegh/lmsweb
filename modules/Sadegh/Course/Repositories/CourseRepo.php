@@ -4,7 +4,7 @@
 namespace Sadegh\Course\Repositories;
 
 
-use Sadegh\Category\Responses\AjaxResponses;
+use Sadegh\Common\Responses\AjaxResponses;
 use Sadegh\Course\Models\Course;
 
 class CourseRepo

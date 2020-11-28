@@ -9,6 +9,7 @@ use Sadegh\Category\Repositories\CategoryRepo;
 use Sadegh\Common\Responses\AjaxResponses;
 use Sadegh\Course\Http\Requests\CourseRequest;
 use Sadegh\Course\Models\Course;
+use Sadegh\Course\Models\Season;
 use Sadegh\Course\Repositories\CourseRepo;
 use Sadegh\Media\Services\MediaFileServiece;
 use Sadegh\User\Repositories\UserRepo;
@@ -65,6 +66,13 @@ class CourseController extends Controller
         $courseRepo->update($id, $request);
 
         return redirect(route('courses.index'));
+    }
+
+    public function details($id ,CourseRepo $courseRepo)
+    {
+        $course = $courseRepo->findById($id);
+        $this->authorize('details',$course);
+        return view('Courses::details',compact('course'));
     }
 
     public function destroy($id, CourseRepo $courseRepo)

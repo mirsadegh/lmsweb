@@ -22,16 +22,13 @@ class Course extends Model
     const STATUS_COMPLETED = 'completed';
     const STATUS_NOT_COMPLETED = 'not-completed';
     const STATUS_LOCKED = 'locked';
+    static $statuses = [self::STATUS_COMPLETED, self::STATUS_NOT_COMPLETED, self::STATUS_LOCKED];
 
     const CONFIRMATION_STATUS_ACCEPTED = 'accepted';
     const CONFIRMATION_STATUS_REJECTED = 'rejected';
     const CONFIRMATION_STATUS_PENDING = 'pending';
-
-
     static $confirmationStatuses = [self::CONFIRMATION_STATUS_ACCEPTED , self::CONFIRMATION_STATUS_PENDING,self::CONFIRMATION_STATUS_REJECTED];
 
-
-    static $statuses = [self::STATUS_COMPLETED, self::STATUS_NOT_COMPLETED, self::STATUS_LOCKED];
 
 
     public function banner()
@@ -47,6 +44,12 @@ class Course extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function seasons()
+    {
+        return $this->hasMany(Season::class);
+
     }
 
 }

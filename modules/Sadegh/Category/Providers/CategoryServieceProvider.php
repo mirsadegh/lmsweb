@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Sadegh\Category\Models\Category;
 use Sadegh\Category\policies\CategoryPolicy;
+use Sadegh\RolePermissions\Models\Permission;
 
 class CategoryServieceProvider extends ServiceProvider
 {
@@ -23,7 +24,8 @@ class CategoryServieceProvider extends ServiceProvider
             [
                 "icon" => "i-categories",
                 "title" => "دسته بندی ها",
-                "url" => route('categories.index')
+                "url" => route('categories.index'),
+                "permission" => Permission::PERMISSION_MANAGE_CATEGORIES
             ]);
     }
 }

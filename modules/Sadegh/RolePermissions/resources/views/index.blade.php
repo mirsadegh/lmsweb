@@ -22,7 +22,7 @@
                     @foreach($roles as $role)
                         <tr role="row" class="">
                             <td><a href="">{{ $role->id }}</a></td>
-                            <td><a href=""> {{ $role->name }}</a></td>
+                            <td><a href=""> @lang($role->name)</a></td>
 
                             <td>
                                 <ul>

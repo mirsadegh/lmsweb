@@ -4,6 +4,7 @@
 namespace Sadegh\User\Providers;
 
 
+use Sadegh\RolePermissions\Models\Permission;
 use Sadegh\User\Http\Middleware\StoreUserIp;
 use Database\Seeders\DatabaseSeeder;
 use Illuminate\Support\Facades\Gate;
@@ -38,8 +39,21 @@ class UserServiceProvider extends ServiceProvider
             [
                 "icon" => "i-users",
                 "title" => "کاربران",
-                "url" => route('users.index')
+                "url" => route('users.index'),
+                "permission" => Permission::PERMISSION_MANAGE_Users
             ]);
+
+        $this->app->booted(function (){
+
+            config()->set('sidebar.items.usersInformation',
+                [
+                    "icon" => "i-user__inforamtion",
+                    "title" => "اطلاعات کاربری",
+                    "url" => route('users.profile')
+                ]);
+
+        });
+
 
     }
 }

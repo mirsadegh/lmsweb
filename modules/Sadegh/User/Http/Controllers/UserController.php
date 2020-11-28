@@ -9,7 +9,8 @@ use Sadegh\Common\Responses\AjaxResponses;
 use Sadegh\Media\Services\MediaFileServiece;
 use Sadegh\RolePermissions\Models\Role;
 use Sadegh\RolePermissions\Repositories\RoleRepo;
-use Sadegh\User\Http\Requests\addRoleRequest;
+use Sadegh\User\Http\Requests\UpdateProfileInformationRequest;
+use Sadegh\User\Http\Requests\UpdateUserPhoto;
 use Sadegh\User\Http\Requests\UpdateUserRequest;
 use Sadegh\User\Models\User;
 use Sadegh\User\Repositories\UserRepo;
@@ -30,7 +31,7 @@ class UserController extends Controller
     
     public function index(RoleRepo $roleRepo)
     {
-        $this->authorize('addRole',User::class);
+        $this->authorize('index',User::class);
         $users = $this->userRepo->paginate();
         $roles = $roleRepo->all();
         return view("User::Admin.index",compact('users','roles'));
@@ -63,6 +64,37 @@ class UserController extends Controller
         return redirect()->back();
     }
 
+    public function updatePhoto(UpdateUserPhoto $request)
+    {
+        $this->authorize('editProfile',User::class);
+       $media = MediaFileServiece::upload($request->file('userPhoto'));
+       if (auth()->user()->image) auth()->user()->image->delete();
+
+       auth()->user()->image_id = $media->id;
+       auth()->user()->save();
+       newFeedback();
+       return back();
+
+    }
+
+
+
+    public function profile()
+    {
+        $this->authorize('editProfile',User::class);
+        return view('User::admin.profile');
+    }
+
+    public function updateProfile(UpdateProfileInformationRequest $request)
+    {
+        $this->authorize('editProfile',User::class);
+        $this->userRepo->updateProfile($request);
+
+        newFeedback();
+        return back();
+
+    }
+
     public function destroy($userId)
     {
         $user = $this->userRepo->findById($userId);
@@ -79,7 +111,7 @@ class UserController extends Controller
 
     }
 
-    public function addRole(addRoleRequest $request ,User $user)
+    public function addRole(UpdateUserPhoto $request , User $user)
     {
         $this->authorize('addRole',User::class);
         $user->assignRole($request->role);

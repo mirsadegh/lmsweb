@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Sadegh\Course\Models\Course;
+use Sadegh\Course\Models\Season;
 use Sadegh\Media\Models\Media;
 use Sadegh\RolePermissions\Models\Role;
 use Sadegh\User\Notifications\ResetPasswordRequestNotification;
@@ -93,6 +94,23 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Course::class,'teacher_id');
     }
 
+    public function seasons()
+    {
+        return $this->hasMany(Season::class);
+    }
+
+    public function profilePath()
+    {
+        return $this->username ? route('viewProfile',$this->username) : route('viewProfile' ,'username');
+    }
+
+    public function getThumbAttribute()
+    {
+        if ($this->image)
+        return '/storage/'. $this->image->files[300];
+
+        return '/panel/img/profile.jpg';
+    }
 
 }
 
