@@ -21,7 +21,8 @@ class CreateSeasonsTable extends Migration
             $table->tinyInteger('number')->unsigned();
             $table->enum('confirmation_status',\Sadegh\Course\Models\Season::$confirmationStatuses)
             ->default(\Sadegh\Course\Models\Season::CONFIRMATION_STATUS_PENDING);
-            $table->enum('status',\Sadegh\Course\Models\Season::$statuses);
+            $table->enum('status',\Sadegh\Course\Models\Season::$statuses)
+                ->default(\Sadegh\Course\Models\Season::STATUS_OPENED);
             $table->timestamps();
 
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');

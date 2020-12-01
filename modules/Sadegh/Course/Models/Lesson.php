@@ -1,14 +1,20 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Home
+ * Date: 11/29/2020
+ * Time: 8:30 PM
+ */
 
 namespace Sadegh\Course\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 use Illuminate\Database\Eloquent\Model;
+use Sadegh\Media\Models\Media;
 use Sadegh\User\Models\User;
 
-class Season extends Model
+class Lesson extends Model
 {
-    use HasFactory;
     protected $guarded = [];
 
     const CONFIRMATION_STATUS_ACCEPTED = 'accepted';
@@ -20,23 +26,24 @@ class Season extends Model
     const STATUS_LOCKED = 'locked';
     static $statuses = [self::STATUS_OPENED, self::STATUS_LOCKED];
 
-
+    public function season()
+    {
+        return $this->belongsTo(Season::class);
+     }
 
     public function course()
     {
-        return $this->belongsTo(Course::class);
-    }
-
-    public function lessons()
-    {
-        return $this->hasMany(Lesson::class);
-    }
+       return $this->belongsTo(Course::class);
+     }
 
     public function user()
     {
         return $this->belongsTo(User::class);
+     }
 
-    }
-
+    public function media()
+    {
+        return $this->belongsTo(Media::class);
+     }
 
 }

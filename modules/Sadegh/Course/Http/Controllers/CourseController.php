@@ -11,6 +11,7 @@ use Sadegh\Course\Http\Requests\CourseRequest;
 use Sadegh\Course\Models\Course;
 use Sadegh\Course\Models\Season;
 use Sadegh\Course\Repositories\CourseRepo;
+use Sadegh\Course\Repositories\LessonRepo;
 use Sadegh\Media\Services\MediaFileServiece;
 use Sadegh\User\Repositories\UserRepo;
 
@@ -68,11 +69,12 @@ class CourseController extends Controller
         return redirect(route('courses.index'));
     }
 
-    public function details($id ,CourseRepo $courseRepo)
+    public function details($id ,CourseRepo $courseRepo,LessonRepo $lessonRepo)
     {
         $course = $courseRepo->findById($id);
+        $lessons = $lessonRepo->paginate();
         $this->authorize('details',$course);
-        return view('Courses::details',compact('course'));
+        return view('Courses::details',compact('course','lessons'));
     }
 
     public function destroy($id, CourseRepo $courseRepo)

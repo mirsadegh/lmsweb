@@ -10,6 +10,18 @@ use Sadegh\Course\Models\Season;
 
 class SeasonRepo
 {
+    public function getCourseSeason($course)
+    {
+        return Season::where('course_id',$course)
+            ->where('confirmation_status',Season::CONFIRMATION_STATUS_ACCEPTED)
+            ->orderBy('number')->get();
+    }
+
+    public function findByIdandCourseId($seasonId,$courseId)
+    {
+       return Season::where('course_id',$courseId)->where('id',$seasonId)->first();
+    }
+
     public function store($id,$values)
     {
         return Season::create([
@@ -17,14 +29,12 @@ class SeasonRepo
            'user_id' => auth()->id(),
            'title' => $values->title,
            'number' =>  $this->generateNumber($id, $values->number),
-           'confirmation_status' => Season::CONFIRMATION_STATUS_PENDING
+           'confirmation_status' => Season::CONFIRMATION_STATUS_PENDING,
+            'status' => Season::STATUS_OPENED,
        ]);
     }
 
-    public function paginate()
-    {
-        return Course::paginate();
-    }
+
 
     public function findById($id)
     {
@@ -59,4 +69,6 @@ class SeasonRepo
         }
         return $number;
     }
+
+
 }

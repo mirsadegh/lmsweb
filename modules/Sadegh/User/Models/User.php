@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Sadegh\Course\Models\Course;
+use Sadegh\Course\Models\Lesson;
 use Sadegh\Course\Models\Season;
 use Sadegh\Media\Models\Media;
 use Sadegh\RolePermissions\Models\Role;
@@ -97,6 +98,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function seasons()
     {
         return $this->hasMany(Season::class);
+    }
+
+    public function lessons()
+    {
+        return $this->hasMany(Lesson::class);
     }
 
     public function profilePath()

@@ -4,6 +4,7 @@ namespace Sadegh\User\Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Sadegh\RolePermissions\database\Seeds\RolePermissionTableSeeder;
 use Sadegh\User\Models\User;
 use Sadegh\User\Services\VerifyCodeService;
 use Tests\TestCase;
@@ -77,6 +78,7 @@ class RegistrationTest extends TestCase
 
     public function test_verified_user_can_see_home_page()
     {
+        $this->seed(RolePermissionTableSeeder::class);
         $this->registerNewUser();
 
         $this->assertAuthenticated();

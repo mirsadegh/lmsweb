@@ -1,14 +1,14 @@
 @extends('Dashboard::master')
 
 @section('breadcrumb')
-    <li><a href="{{ route('courses.index') }}" title="دوره">دوره</a></li>
-    <li><a href="#" title="ویرایش">ویرایش</a></li>
+    <li><a href="{{ route('courses.index') }}" title="دوره">  دوره ها</a></li>
+    <li><a href="#" title="ویرایش">ایجاد دوره</a></li>
 @endsection
 
 @section('content')
     <div class="row no-gutters">
         <div class="col-12 bg-white">
-<p class="box__title">بروزرسانی دوره جدید</p>
+<p class="box__title">ایجاد دوره </p>
             <form action="{{ route('courses.store') }}" class="padding-30" method="post" enctype="multipart/form-data">
                 @csrf
 
