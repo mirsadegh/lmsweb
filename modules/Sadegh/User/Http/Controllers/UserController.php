@@ -52,7 +52,7 @@ class UserController extends Controller
         $user = $this->userRepo->findById($userId);
 
         if ($request->hasFile('image')) {
-            $request->request->add(['image_id' => MediaFileServiece::upload($request->file('image'))->id]);
+            $request->request->add(['image_id' => MediaFileServiece::publicUpload($request->file('image'))->id]);
             if ($user->banner)
                 $user->banner->delete();
         } else {
@@ -67,7 +67,7 @@ class UserController extends Controller
     public function updatePhoto(UpdateUserPhoto $request)
     {
         $this->authorize('editProfile',User::class);
-       $media = MediaFileServiece::upload($request->file('userPhoto'));
+       $media = MediaFileServiece::publicUpload($request->file('userPhoto'));
        if (auth()->user()->image) auth()->user()->image->delete();
 
        auth()->user()->image_id = $media->id;

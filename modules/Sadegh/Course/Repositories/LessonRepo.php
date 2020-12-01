@@ -16,7 +16,7 @@ class LessonRepo
            'title' => $values->title,
            'slug' =>  $values->slug ?  \Str::slug($values->slug):\Str::slug($values->title),
            'time' => $values->time,
-           'number' => $values->number,
+           'number' => $this->generateNumber($courseId,$values->number),
            'season_id' => $values->season_id,
            'media_id' => $values->media_id,
            'course_id' => $courseId,

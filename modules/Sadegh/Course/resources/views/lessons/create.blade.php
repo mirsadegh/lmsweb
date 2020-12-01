@@ -19,6 +19,8 @@
                 <x-input name="number" placeholder="شماره جلسه" type="number" class="text-left"/>
 
 
+
+
                 @if(count($seasons))
                 <x-select name="season_id" required>
                     <option value=""> انتخاب سرفصل درس *</option>

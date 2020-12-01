@@ -14,6 +14,7 @@ class MediaServiceProvider extends ServiceProvider
           $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 //        $this->loadJsonTranslationsFrom(__DIR__.'/../resources/lang/');
 //        $this->loadTranslationsFrom(__DIR__.'/../resources/lang/',"Media");
+          $this->mergeConfigFrom(__DIR__.'/../Config/mediaFile.php','mediaFile');
 
     }
 

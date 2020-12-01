@@ -3,38 +3,41 @@
 namespace Sadegh\Media\Services;
 
 
+use Sadegh\Media\Contracts\FileServiceContract;
 use Sadegh\Media\Models\Media;
 
 class MediaFileServiece
 {
 
-    public static function upload($file)
+    private static $file;
+    private static $dir;
+    private static $isPrivate;
+    public static function privateUpload($file)
+    {
+        self::$file = $file;
+        self::$dir = "private/";
+        self::$isPrivate = true;
+       return self::upload();
+    }
+
+    public static function publicUpload($file)
+    {
+        self::$file = $file;
+        self::$dir = "public/";
+        self::$isPrivate = false;
+      return  self::upload($file,"public");
+    }
+
+    private static function upload()
     {
 
-        $extension = strtolower($file->getClientOriginalExtension());
+        $extension = self::normalizeExtension(self::$file);
 
-        switch ($extension) {
-            case 'jpg':
-            case 'png':
-            case 'jpeg':
-                $media = new Media();
-                $media->files = ImageFileService::upload($file);
-                $media->type = 'image';
-                $media->user_id = auth()->id();
-                $media->filename = $file->getClientOriginalName();
-                $media->save();
-                return $media;
-                break;
-            case 'avi':
-            case 'mp4':
-                $media = new Media();
-                $media->files = videoFileService::upload($file);
-                $media->type = "video";
-                $media->user_id = auth()->id();
-                $media->filename = $file->getClientOriginalName();
-                $media->save();
-                return $media;
-                break;
+        foreach (config("mediaFile.MediaTypeServieces") as $key=>$service){
+           if (in_array($extension,$service['extensions'])){
+               return self::uploadByHandler(new $service['handler'], $key);
+           }
+
         }
 
     }
@@ -46,5 +49,28 @@ class MediaFileServiece
                 ImageFileService::delete($media);
                 break;
         }
+    }
+
+
+    private static function normalizeExtension($file)
+    {
+        return strtolower($file->getClientOriginalExtension());
+    }
+
+    private static function filenameGenerator(){
+        return uniqid();
+    }
+
+
+    private static function uploadByHandler(FileServiceContract $service, $key)
+    {
+        $media = new Media();
+        $media->files = $service::upload(self::$file, self::filenameGenerator(), self::$dir);
+        $media->type = $key;
+        $media->user_id = auth()->id();
+        $media->filename = self::$file->getClientOriginalName();
+        $media->is_private = self::$isPrivate;
+        $media->save();
+        return $media;
     }
 }

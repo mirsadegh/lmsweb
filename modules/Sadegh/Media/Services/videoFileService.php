@@ -5,19 +5,22 @@ namespace Sadegh\Media\Services;
 
 
 use Illuminate\Support\Facades\Storage;
+use Sadegh\Media\Contracts\FileServiceContract;
+use Sadegh\Media\Models\Media;
 
-class videoFileService
+class videoFileService extends DefaultFileService implements FileServiceContract
 {
 
-    public static function upload($file)
+    public static function upload($file,$filename,$dir) :array
     {
-        $filename = uniqid();
+
         $extension = $file->getClientOriginalExtension();
         $dir = 'private\\';
         Storage::putFileAs($dir , $file , $filename . '.' . $extension);
 
-       return ["video" =>  $dir. $filename . '.' . $extension] ;
+       return ["video" =>   $filename . '.' . $extension] ;
 
     }
-    
+
+
 }

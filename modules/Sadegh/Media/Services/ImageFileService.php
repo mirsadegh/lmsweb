@@ -4,24 +4,22 @@
 namespace Sadegh\Media\Services;
 
 
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Sadegh\Media\Contracts\FileServiceContract;
 
-class ImageFileService
+class ImageFileService extends DefaultFileService implements FileServiceContract
 {
     protected static $sizes = ['300','600'];
 
-    public static function upload($file)
+    public static function upload(UploadedFile $file,string $filename,$dir) :array
     {
-        $filename = uniqid();
-        $extension = $file->getClientOriginalExtension();
-        $dir = 'public\\';
-        Storage::putFileAs($dir , $file , $filename . '.' . $extension);
-
+        Storage::putFileAs($dir , $file , $filename . '.' . $file->getClientOriginalExtension());
 //        $file->move(storage_path($dir),$filename . '.' . $extension);
-        $path = $dir. $filename . '.' . $extension;
+        $path = $dir. $filename . '.' . $file->getClientOriginalExtension();
 
-        return self::resize(Storage::path($path) , $dir , $filename , $extension);
+        return self::resize(Storage::path($path) , $dir , $filename , $file->getClientOriginalExtension());
 
 
     }
@@ -42,11 +40,6 @@ class ImageFileService
 
     }
 
-    public static function delete($media)
-    {
-        foreach ($media->files as $file){
-            Storage::delete('public\\'. $file);
-        }
-    }
+
 
 }
