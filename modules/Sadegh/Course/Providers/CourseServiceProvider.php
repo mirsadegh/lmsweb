@@ -8,6 +8,8 @@ namespace Sadegh\Course\Providers;
 
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use Sadegh\Course\Models\Lesson;
+use Sadegh\Course\Policies\LessonPolicy;
 use Sadegh\Course\Policies\SeasonPolicy;
 use Sadegh\RolePermissions\database\Seeds\RolePermissionTableSeeder;
 use Sadegh\Course\Models\Course;
@@ -31,6 +33,7 @@ class CourseServiceProvider extends ServiceProvider
 
         Gate::policy(Course::class,CoursePolicy::class);
         Gate::policy(Season::class,SeasonPolicy::class);
+        Gate::policy(Lesson::class,LessonPolicy::class);
 
 
     }

@@ -22,7 +22,7 @@
 
 
                 @if(count($seasons))
-                <x-select name="season_id" required>
+                <x-select name="season_id">
                     <option value=""> انتخاب سرفصل درس *</option>
                     @foreach($seasons as $season)
                     <option value="{{ $season->id }}" @if($season->id == old('season_id')) selected @endif>
@@ -36,11 +36,11 @@
                 <div class="w-50">
                     <p class="box__title">ایا این درس رایگان است ؟ </p>
                     <div class="notificationGroup">
-                        <input id="lesson-upload-field-1" name="free" value="0" type="radio" checked="">
+                        <input id="lesson-upload-field-1" name="is_free" value="0" type="radio" checked="">
                         <label for="lesson-upload-field-1">خیر</label>
                     </div>
                     <div class="notificationGroup">
-                        <input id="lesson-upload-field-2" name="free" value="1" type="radio">
+                        <input id="lesson-upload-field-2" name="is_free" value="1" type="radio">
                         <label for="lesson-upload-field-2">بله</label>
                     </div>
                 </div>

@@ -12,12 +12,13 @@ class MediaFileServiece
     private static $file;
     private static $dir;
     private static $isPrivate;
+
     public static function privateUpload($file)
     {
         self::$file = $file;
         self::$dir = "private/";
         self::$isPrivate = true;
-       return self::upload();
+        return self::upload();
     }
 
     public static function publicUpload($file)
@@ -25,7 +26,7 @@ class MediaFileServiece
         self::$file = $file;
         self::$dir = "public/";
         self::$isPrivate = false;
-      return  self::upload($file,"public");
+        return self::upload($file, "public");
     }
 
     private static function upload()
@@ -33,10 +34,10 @@ class MediaFileServiece
 
         $extension = self::normalizeExtension(self::$file);
 
-        foreach (config("mediaFile.MediaTypeServieces") as $key=>$service){
-           if (in_array($extension,$service['extensions'])){
-               return self::uploadByHandler(new $service['handler'], $key);
-           }
+        foreach (config("mediaFile.MediaTypeServieces") as $type => $service) {
+            if (in_array($extension, $service['extensions'])) {
+                return self::uploadByHandler(new $service['handler'], $type);
+            }
 
         }
 
@@ -44,11 +45,12 @@ class MediaFileServiece
 
     public static function delete($media)
     {
-        switch ($media->type) {
-            case 'image':
-                ImageFileService::delete($media);
-                break;
+        foreach (config("mediaFile.MediaTypeServieces") as $type => $service) {
+            if ($media->type == $type) {
+                return $service['handler']::delete($media);
+            }
         }
+
     }
 
 
@@ -57,7 +59,8 @@ class MediaFileServiece
         return strtolower($file->getClientOriginalExtension());
     }
 
-    private static function filenameGenerator(){
+    private static function filenameGenerator()
+    {
         return uniqid();
     }
 
@@ -72,5 +75,25 @@ class MediaFileServiece
         $media->is_private = self::$isPrivate;
         $media->save();
         return $media;
+    }
+
+    public static function thumb(Media $media)
+    {
+        foreach (config("mediaFile.MediaTypeServieces") as $type => $service) {
+            if ($media->type == $type) {
+                return $service['handler']::thumb($media);
+            }
+        }
+    }
+
+    public static function getExtensions()
+    {
+        $extensions = [];
+        foreach (config("mediaFile.MediaTypeServieces") as $service) {
+             foreach ($service['extensions'] as $extension){
+                 $extensions[] = $extension;
+             }
+        }
+        return implode(',',$extensions) ;
     }
 }

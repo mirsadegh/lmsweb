@@ -26,6 +26,13 @@ class Lesson extends Model
     const STATUS_LOCKED = 'locked';
     static $statuses = [self::STATUS_OPENED, self::STATUS_LOCKED];
 
+
+    public function getConfirmationStatusCssClass()
+    {
+        if($this->confirmation_status == self::CONFIRMATION_STATUS_ACCEPTED) return 'text-success';
+        elseif($this->confirmation_status == self::CONFIRMATION_STATUS_REJECTED) return'text-error';
+    }
+
     public function season()
     {
         return $this->belongsTo(Season::class);

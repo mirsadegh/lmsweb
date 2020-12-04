@@ -36,14 +36,17 @@
                        class="item-reject mlg-15" title="رد">
                     </a>
 
-
+                    @if($season->status == \Sadegh\Course\Models\Season::STATUS_OPENED)
                     <a href="" onclick="updateConfirmationStatus(event,'{{ route('seasons.lock',$season->id) }}','آیا از قفل کردن این آیتم اطمینان دارید؟'
                             ,'قفل شده','status')" class="item-lock mlg-15 text-error" title="قفل">
                     </a>
+                   @else
+                            <a href="" onclick="updateConfirmationStatus(event,'{{ route('seasons.unlock',$season->id) }}','آیا از  باز کردن این آیتم اطمینان دارید؟'
+                                    ,'بازکردن','status')" class="item-lock mlg-15 text-success" title="بازکردن">
+                            </a>
+                   @endif
 
-                    <a href="" onclick="updateConfirmationStatus(event,'{{ route('seasons.unlock',$season->id) }}','آیا از باز کردن این آیتم اطمینان دارید؟'
-                            ,'باز','status')" class="item-lock mlg-15 text-success" title="باز کردن">
-                    </a>
+
                     @endcan
                     <a href="{{ route('seasons.edit',$season->id) }}" class="item-edit " title="ویرایش"></a>
                 </td>

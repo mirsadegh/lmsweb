@@ -23,13 +23,14 @@ class LessonRepo
            'user_id' => auth()->id(),
            'body' => $values->body,
            'confirmation_status' => Lesson::CONFIRMATION_STATUS_PENDING,
-           "status" => Lesson::STATUS_OPENED
+           "status" => Lesson::STATUS_OPENED,
+           "is_free" => $values->is_free
        ]);
     }
 
-    public function paginate()
+    public function paginate($courseId)
     {
-        return Lesson::orderBy('number')->paginate();
+        return Lesson::where('course_id',$courseId)->orderBy('number')->paginate();
     }
 
     public function findById($id)
@@ -37,25 +38,25 @@ class LessonRepo
         return Lesson::findOrFail($id);
     }
 
-    public function update($id, $values)
+    public function update($id,$courseId, $values)
     {
         return Lesson::where('id',$id)->update([
-            'teacher_id' => $values->teacher_id,
-            'category_id' => $values->category_id,
-            'banner_id' => $values->banner_id,
             'title' => $values->title,
-            'slug' => \Str::slug($values->slug),
-            'number' => $this->generateNumber($id,$values->number),
-            'price' => $values->price,
-            'percent' => $values->percent,
-            'type' => $values->type,
-            'status' => $values->status,
+            'slug' =>  $values->slug ?  \Str::slug($values->slug):\Str::slug($values->title),
+            'time' => $values->time,
+            'number' => $this->generateNumber($courseId,$values->number),
+            'season_id' => $values->season_id,
+            'media_id' => $values->media_id,
             'body' => $values->body,
+            "is_free" => $values->is_free
         ]);
     }
 
     public function updateConfirmationStatus($id,$status)
     {
+        if (is_array($id)){
+            return Lesson::query()->whereIn('id',$id)->update(['confirmation_status'=>$status]);
+        }
        return Lesson::where('id',$id)->update(['confirmation_status' => $status]);
     }
 
@@ -73,6 +74,13 @@ class LessonRepo
         }
         return $number;
     }
+
+    public function acceptAll($courseId)
+    {
+        return Lesson::where('course_id',$courseId)->update(['confirmation_status'=>Lesson::CONFIRMATION_STATUS_ACCEPTED]);
+    }
+
+
 
 
 }

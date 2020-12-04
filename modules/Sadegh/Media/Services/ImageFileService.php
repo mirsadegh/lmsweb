@@ -8,6 +8,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Sadegh\Media\Contracts\FileServiceContract;
+use Sadegh\Media\Models\Media;
 
 class ImageFileService extends DefaultFileService implements FileServiceContract
 {
@@ -41,5 +42,8 @@ class ImageFileService extends DefaultFileService implements FileServiceContract
     }
 
 
-
+    public static function thumb(Media $media)
+    {
+       return "/storage/". $media->files['300'];
+    }
 }
