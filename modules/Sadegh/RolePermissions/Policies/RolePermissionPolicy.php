@@ -3,7 +3,8 @@
 namespace Sadegh\RolePermissions\Policies;
 
 
-use function GuzzleHttp\Promise\is_fulfilled;
+
+
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Sadegh\RolePermissions\Models\Permission;
 
@@ -13,8 +14,10 @@ class RolePermissionPolicy
 
     public function index($user)
     {
+
          if($user->hasPermissionTo(Permission::PERMISSION_MANAGE_ROLE_PERMISSIONS)) return true;
          return null;
+
      }
 
     public function create($user)

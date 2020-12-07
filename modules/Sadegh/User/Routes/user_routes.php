@@ -8,8 +8,8 @@ Route::group(['namespace' => 'Sadegh\User\Http\Controllers', 'middleware' => ['w
         Route::delete('users/{user}/remove/{role}/role',"UserController@removeRole")->name('users.removeRole');
         Route::patch('users/{user}/manualVerify',"UserController@manualVerify")->name('users.manualVerify');
         Route::post('users/photo',"UserController@updatePhoto")->name('users.photo');
-        Route::get('users/profile',"UserController@profile")->name('users.profile');
-        Route::post('users/profile',"UserController@updateProfile")->name('users.profile');
+        Route::get('edit-profile',"UserController@profile")->name('users.profile');
+        Route::post('edit-profile',"UserController@updateProfile")->name('users.profile');
         Route::post('tutors/{username}',"UserController@viewProfile")->name('viewProfile');
         Route::resource('users','UserController');
 
@@ -28,7 +28,7 @@ Route::group(['namespace' => 'Sadegh\User\Http\Controllers', 'middleware' => 'we
         Route::get('/login','Auth\LoginController@showLoginForm')->name('login');
 
         //logout
-        Route::post('/logout','Auth\LoginController@logout')->name('logout');
+        Route::any('/logout','Auth\LoginController@logout')->name('logout');
 
         //reset password
         Route::get('/password/reset','Auth\ForgotPasswordController@showVerifyCodeRequestForm')

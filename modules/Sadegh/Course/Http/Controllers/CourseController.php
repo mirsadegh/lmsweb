@@ -9,10 +9,10 @@ use Sadegh\Category\Repositories\CategoryRepo;
 use Sadegh\Common\Responses\AjaxResponses;
 use Sadegh\Course\Http\Requests\CourseRequest;
 use Sadegh\Course\Models\Course;
-use Sadegh\Course\Models\Season;
 use Sadegh\Course\Repositories\CourseRepo;
 use Sadegh\Course\Repositories\LessonRepo;
 use Sadegh\Media\Services\MediaFileServiece;
+use Sadegh\RolePermissions\Models\Permission;
 use Sadegh\User\Repositories\UserRepo;
 
 class CourseController extends Controller
@@ -20,8 +20,12 @@ class CourseController extends Controller
 
     public function index(CourseRepo $courseRepo)
     {
-        $this->authorize('manage', Course::class);
-        $courses = $courseRepo->paginate();
+        $this->authorize('index', Course::class);
+        if (auth()->user()->hasAnyPermission([Permission::PERMISSION_MANAGE_COURSES,Permission::PERMISSION_SUPER_ADMIN])){
+            $courses = $courseRepo->paginate();
+        }else{
+            $courses = $courseRepo->getCouresesByTeacherId(auth()->id());
+        }
         return view('Courses::index', compact('courses'));
     }
 

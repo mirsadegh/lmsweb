@@ -5,9 +5,8 @@ namespace Sadegh\Course\Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Sadegh\Category\Models\Category;
+use Sadegh\Course\Models\Season;
 use Sadegh\RolePermissions\database\Seeds\RolePermissionTableSeeder;
 use Sadegh\Course\Models\Course;
 use Sadegh\RolePermissions\Models\Permission;
@@ -31,7 +30,7 @@ class SeasonTest extends TestCase
         $course->save();
         $this->get(route('courses.details', $course->id))->assertOk();
 
-        $this->actionAsSuperAdmin();
+        $this->actAsSuperAdmin();
         $this->get(route('courses.details', $course->id))->assertOk();
     }
 
@@ -355,24 +354,24 @@ class SeasonTest extends TestCase
 
     public function createUser()
     {
-        $user = User::create(
-            [
-                'name' => $this->faker->name,
-                'email' => $this->faker->unique()->safeEmail,
-                'email_verified_at' => now(),
-                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-                'remember_token' => Str::random(10),
-            ]
-        );
+//        $user = User::create(
+//            [
+//                'name' => $this->faker->name,
+//                'email' => $this->faker->unique()->safeEmail,
+//                'email_verified_at' => now(),
+//                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+//                'remember_token' => Str::random(10),
+//            ]
+//        );
 
-        $this->actingAs($user);
+        $this->actingAs(User::factory()->create());
         $this->seed(RolePermissionTableSeeder::class);
     }
 
     private function createCourse()
     {
 
-        $data = $this->courseData() + ['confirmation_status' => Course::CONFIRMATION_STATUS_PENDING];
+        $data = $this->courseData() + ['confirmation_status' => Course::CONFIRMATION_STATUS_PENDING,];
         unset($data['image']);
         return Course::create($data);
 

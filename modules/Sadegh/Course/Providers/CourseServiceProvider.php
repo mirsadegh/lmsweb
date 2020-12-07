@@ -30,7 +30,6 @@ class CourseServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->loadJsonTranslationsFrom(__DIR__.'/../resources/lang/');
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang/',"Courses");
-
         Gate::policy(Course::class,CoursePolicy::class);
         Gate::policy(Season::class,SeasonPolicy::class);
         Gate::policy(Lesson::class,LessonPolicy::class);
@@ -45,8 +44,11 @@ class CourseServiceProvider extends ServiceProvider
                 "icon" => "i-categories",
                 "title" => "دوره ها",
                 "url" => route('courses.index'),
-                "permission" => Permission::PERMISSION_MANAGE_COURSES
+                "permission" => [
+                    Permission::PERMISSION_MANAGE_COURSES,
+                    Permission::PERMISSION_MANAGE_OWN_COURSES
+                ]
             ]);
     }
-    
+
 }

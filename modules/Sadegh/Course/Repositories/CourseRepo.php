@@ -64,4 +64,9 @@ class CourseRepo
     {
         return Course::where('id',$id)->update(['status' => $status]);
     }
+
+    public function getCouresesByTeacherId(?int $id)
+    {
+        return Course::where('teacher_id',$id)->get();
+    }
 }

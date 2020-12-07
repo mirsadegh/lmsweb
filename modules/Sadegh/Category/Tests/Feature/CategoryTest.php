@@ -48,7 +48,7 @@ class CategoryTest extends TestCase
         $this->actionAsAdmin();
         $this->createCategory();
         $this->assertEquals(1, Category::all()->count());
-        $this->patch(route('categories.update', 1), ['title' => $newTitle, "slug" => $this->faker]);
+        $this->patch(route('categories.update', 1), ['title' => $newTitle, "slug" => $this->faker->word]);
 
         $this->assertEquals(1, Category::whereTitle($newTitle)->count());
     }
@@ -64,27 +64,20 @@ class CategoryTest extends TestCase
 
     public function actionAsAdmin()
     {
-        $user = User::create([
-            'name' => $this->faker->name,
-            'email' => $this->faker->unique()->safeEmail,
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
-        ]);
-        $this->actingAs($user);
+        $this->actingAs(User::factory()->create());
         $this->seed(RolePermissionTableSeeder::class);
         auth()->user()->givePermissionTo(Permission::PERMISSION_MANAGE_CATEGORIES);
     }
 
     public function actionAsUser()
     {
-        $this->actingAs(factory(User::class)->create());
+        $this->actingAs(User::factory()->create());
         $this->seed(RolePermissionTableSeeder::class);
     }
 
     private function createCategory()
     {
-      return  $this->post(route('categories.store'), ['title' => $this->faker->word, "slug" => $this->faker]);
+      return  $this->post(route('categories.store'), ['title' => $this->faker->word, "slug" => $this->faker->word]);
     }
 
 

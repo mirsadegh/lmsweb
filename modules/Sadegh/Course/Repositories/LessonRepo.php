@@ -42,7 +42,7 @@ class LessonRepo
     {
         return Lesson::where('id',$id)->update([
             'title' => $values->title,
-            'slug' =>  $values->slug ?  \Str::slug($values->slug):\Str::slug($values->title),
+            'slug' =>  $values->slug ?  \Str::slug($values->slug) :\Str::slug($values->title),
             'time' => $values->time,
             'number' => $this->generateNumber($courseId,$values->number),
             'season_id' => $values->season_id,

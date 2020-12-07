@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Home
- * Date: 11/11/2020
- * Time: 9:44 PM
- */
+
 
 namespace Sadegh\Course\Http\Requests;
 

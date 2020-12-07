@@ -1,0 +1,17 @@
+{
+  "name": "sadegh/front",
+  "autoload": {
+    "psr-4": {
+      "Sadegh\\Front\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "\\Sadegh\\Front\\Providers\\FrontServiceProvider"
+      ]
+    }
+  }
+}
+
+

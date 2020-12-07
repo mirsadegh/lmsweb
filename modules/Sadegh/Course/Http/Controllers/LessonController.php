@@ -27,12 +27,13 @@ class LessonController extends Controller
         $this->lessonRepo = $lessonRepo;
     }
 
-    public function create($courseId, SeasonRepo $seasonRepo, CourseRepo $courseRepo)
+    public function create($course, SeasonRepo $seasonRepo, CourseRepo $courseRepo)
     {
-        $seasons = $seasonRepo->getCourseSeason($courseId);
-        $course = $courseRepo->findById($courseId);
-        $this->authorize('createLesson',$course);
+        $course = $courseRepo->findById($course);
+        $this->authorize('createLesson', $course);
+        $seasons = $seasonRepo->getCourseSeason($course->id);
         return view('Courses::lessons.create', compact('seasons', 'course'));
+
     }
 
     public function store($courseId, LessonRequest $request,CourseRepo $courseRepo)
@@ -71,7 +72,6 @@ class LessonController extends Controller
         $this->lessonRepo->update($lessonId, $courseId, $request);
         newFeedback();
         return redirect(route('courses.details', $courseId));
-
     }
 
     public function accept($id)

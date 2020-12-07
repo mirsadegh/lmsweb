@@ -23,7 +23,7 @@ class RolePermissionsController extends Controller
         $this->roleRepo = $roleRepo;
         $this->permissionRepo = $permissionRepo;
     }
-    
+
     public function index()
     {
         $this->authorize('index',Role::class);
