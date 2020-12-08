@@ -53,7 +53,7 @@
 
                         <td><a href="">{{ $lesson->title }}</a></td>
 
-                        <td>@if($lesson->season) {{ $lesson->season->title }}   @endif</td>
+                        <td>{{ $lesson->season ? $lesson->season->title : '-' }}</td>
                           <td>{{ $lesson->time }}دقیقه</td>
                           <td class="confirmation_status">
 

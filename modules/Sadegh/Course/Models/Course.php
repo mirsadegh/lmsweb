@@ -5,6 +5,7 @@ namespace Sadegh\Course\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Sadegh\Category\Models\Category;
+use Sadegh\Course\Repositories\CourseRepo;
 use Sadegh\Media\Models\Media;
 use Sadegh\User\Models\User;
 
@@ -55,6 +56,40 @@ class Course extends Model
     public function lessons()
     {
         return $this->hasMany(Lesson::class);
+    }
+
+    public function getDuration()
+    {
+        return (new CourseRepo())->getDuration($this->id);
+    }
+
+    public function formattedDuration()
+    {
+        $duration = $this->getDuration();
+        $h = floor($duration / 60) <10 ? '0'.round($duration / 60): floor($duration / 60);
+        $m = ($duration % 60 ) <10 ? '0'. ($duration % 60 ) : ($duration % 60 );
+        return $h . ':' . $m . ":00";
+    }
+
+    public function getFormattedPrice()
+    {
+        return number_format($this->price);
+    }
+
+    public function path()
+    {
+        return route('singleCourse',$this->id . '-'. $this->slug);
+    }
+
+    public function lessonsCount()
+    {
+        return (new CourseRepo())->getLessonsCount($this->id);
+    }
+
+    public function shortUrl()
+    {
+        return route('singleCourse', $this->id );
+
     }
 
 }

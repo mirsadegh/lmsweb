@@ -31,6 +31,6 @@ class Category extends Model
 
     public function path()
     {
-//        return route('categories.show',$this->id);
+        return route('categories.show',$this->id);
     }
 }
