@@ -43,6 +43,15 @@ class MediaFileServiece
 
     }
 
+    static function stream(Media $media){
+
+        foreach (config("mediaFile.MediaTypeServieces") as $type => $service) {
+            if ($media->type == $type) {
+                return $service['handler']::stream($media);
+            }
+        }
+    }
+
     public static function delete($media)
     {
         foreach (config("mediaFile.MediaTypeServieces") as $type => $service) {

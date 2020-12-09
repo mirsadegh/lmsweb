@@ -7,8 +7,9 @@ namespace Sadegh\Media\Services;
 use Illuminate\Support\Facades\Storage;
 use Sadegh\Media\Models\Media;
 
-class DefaultFileService
+abstract class DefaultFileService
 {
+    public static $media;
 
     public static function delete(Media $media)
     {
@@ -22,5 +23,23 @@ class DefaultFileService
         }
 
     }
+
+    abstract static function getFilename();
+
+    public static function stream(Media $media)
+    {
+          static::$media = $media;
+          $stream = Storage::readStream(static::getFilename());
+          return response()->stream(function () use($stream){
+              fpassthru($stream);
+          },
+              200,
+              [
+                  "Content-Type" => Storage::mimeType(static::getFilename()),
+                  "Content-disposition" => "attachment; filename='" . static::$media->filename . "' "
+              ]
+          );
+    }
+
 
 }

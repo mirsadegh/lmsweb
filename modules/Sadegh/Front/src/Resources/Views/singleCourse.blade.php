@@ -36,22 +36,37 @@
                                 <p>45%</p>
                                 تخفیف
                             </div>
-                            <div class="sell_course d-none">
-                                <strong>قیمت :</strong>
-                                <del class="discount-Price">900,000</del>
-                                <p class="price">
-                        <span class="woocommerce-Price-amount amount">495,000
-                            <span class="woocommerce-Price-currencySymbol">تومان</span>
-                        </span>
-                                </p>
-                            </div>
-                           @if(auth()->id()  == $course->teacher_id)
-                                <p class="mycourse ">شما مدرس این دوره هستید</p>
-                            @elseif(auth()->user()->hasAccessToCourse($course->id))
-                                <p class="mycourse">شما این دوره رو خریداری کرده اید</p>
+
+
+                            @auth
+                                @if(auth()->id()  == $course->teacher_id)
+                                    <p class="mycourse ">شما مدرس این دوره هستید</p>
+                                @elseif(auth()->user()->hasAccessToCourse($course))
+                                    <p class="mycourse">شما این دوره رو خریداری کرده اید</p>
+                                @else
+                                    <div class="sell_course">
+                                        <strong>قیمت :</strong>
+                                        <del class="discount-Price">{{ $course->getFormattedPrice() }}</del>
+                                        <p class="price">
+                                            <span class="woocommerce-Price-amount amount">{{ $course->getFormattedPrice() }}
+                                                <span class="woocommerce-Price-currencySymbol">تومان</span>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <button class="btn buy">خرید دوره</button>
+                                @endif
                             @else
+                                <div class="sell_course">
+                                    <strong>قیمت :</strong>
+                                    <del class="discount-Price">{{ $course->getFormattedPrice() }}</del>
+                                    <p class="price">
+                                        <span class="woocommerce-Price-amount amount">{{ $course->getFormattedPrice() }}
+                                            <span class="woocommerce-Price-currencySymbol">تومان</span>
+                                        </span>
+                                    </p>
+                                </div>
                                 <button class="btn buy">خرید دوره</button>
-                            @endif
+                            @endauth
 
                             <div class="average-rating-sidebar">
                                 <div class="rating-stars">
@@ -79,7 +94,7 @@
                         <div class="product-info-box">
                             <div class="product-meta-info-list">
                                 <div class="total_sales">
-                                    تعداد دانشجو : <span>246</span>
+                                    تعداد دانشجو : <span>{{ count($course->students) }}</span>
                                 </div>
                                 <div class="meta-info-unit one">
                                     <span class="title">تعداد جلسات منتشر شده :  </span>
@@ -141,12 +156,15 @@
                     </div>
                 </div>
                 <div class="content-left">
+                   @if($lesson->media->type == "video")
                     <div class="preview">
                         <video width="100%" controls="">
-                            <source src="intro.mp4" type="video/mp4">
+                            <source src="{{ $lesson->downloadLink() }}" type="video/mp4">
                         </video>
                     </div>
-                    <a href="#" class="episode-download">دانلود این قسمت (قسمت 1)</a>
+                    @endif
+
+                    <a href="{{ $lesson->downloadLink() }}" class="episode-download">دانلود این قسمت (قسمت {{ $lesson->number }})</a>
                     <div class="course-description">
                         <div class="course-description-title">توضیحات دوره</div>
                        <div>
@@ -162,87 +180,8 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="episodes-list">
-                        <div class="episodes-list--title">فهرست جلسات</div>
-                        <div class="episodes-list-section">
-                            <div class="episodes-list-item ">
-                                <div class="section-right">
-                                    <span class="episodes-list-number">۱</span>
-                                    <div class="episodes-list-title">
-                                        <a href="php-ep-1.html">php چیست</a>
-                                    </div>
-                                </div>
-                                <div class="section-left">
-                                    <div class="episodes-list-details">
-                                        <div class="episodes-list-details">
-                                            <span class="detail-type">رایگان</span>
-                                            <span class="detail-time">44:44</span>
-                                            <a class="detail-download">
-                                                <i class="icon-download"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="episodes-list-item">
-                                <div class="section-right">
-                                    <span class="episodes-list-number">2</span>
-                                    <div class="episodes-list-title">
-                                        <a href="php-ep-2.html">نصب و راه اندازی</a>
-                                    </div>
-                                </div>
-                                <div class="section-left">
-                                    <div class="episodes-list-details">
-                                        <div class="episodes-list-details">
-                                            <span class="detail-type">رایگان</span>
-                                            <span class="detail-time">44:44</span>
-                                            <a class="detail-download">
-                                                <i class="icon-download"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="episodes-list-item lock">
-                                <div class="section-right">
-                                    <span class="episodes-list-number">3</span>
-                                    <div class="episodes-list-title">
-                                        <a href="#">اضافه کردن متد های جدید به router - از فصل اول بخش اخر</a>
-                                    </div>
-                                </div>
-                                <div class="section-left">
-                                    <div class="episodes-list-details">
-                                        <div class="episodes-list-details">
-                                            <!--                                            <span class="detail-type">نقدی</span>-->
-                                            <span class="detail-time">44:44</span>
-                                            <a class="detail-download">
-                                                <i class="icon-download"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="episodes-list-item lock">
-                                <div class="section-right">
-                                    <span class="episodes-list-number">-</span>
-                                    <div class="episodes-list-title">
-                                        <a href="#">دانلود فایل</a>
-                                    </div>
-                                </div>
-                                <div class="section-left">
-                                    <div class="episodes-list-details">
-                                        <div class="episodes-list-details">
-                                            <!--                                            <span class="detail-type">نقدی</span>-->
-                                            <span class="detail-time"></span>
-                                            <a class="detail-download">
-                                                <i class="icon-download"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @include("Front::layout.episodes-list")
+
                 </div>
             </div>
 

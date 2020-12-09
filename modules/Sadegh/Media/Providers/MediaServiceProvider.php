@@ -7,8 +7,13 @@ use Illuminate\Support\ServiceProvider;
 
 class MediaServiceProvider extends ServiceProvider
 {
+    protected $namespace = 'Sadegh\Media\Http\Controllers';
     public function register()
     {
+        \Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(__DIR__.'/../Routes/media_routes.php');
+
 //        $this->loadRoutesFrom(__DIR__.'/../routes/media_routes.php');
 //        $this->loadViewsFrom(__DIR__.'/../resources/views/','Media');
           $this->loadMigrationsFrom(__DIR__.'/../database/migrations');

@@ -10,7 +10,9 @@ namespace Sadegh\Course\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\URL;
 use Sadegh\Media\Models\Media;
+use Sadegh\Media\Services\MediaFileServiece;
 use Sadegh\User\Models\User;
 
 class Lesson extends Model
@@ -52,5 +54,15 @@ class Lesson extends Model
     {
         return $this->belongsTo(Media::class);
      }
+
+    public function path()
+    {
+       return $this->course->path() . '?lesson=l-'.$this->id . "-". $this->slug;
+    }
+
+    public function downloadLink()
+    {
+        return URL::temporarySignedRoute('media.download',now()->addDay(),['media'=>$this->media_id]);
+    }
 
 }
