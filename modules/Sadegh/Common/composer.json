@@ -5,7 +5,7 @@
       "Sadegh\\Common\\": "src/"
     },
     "files": [
-      "src/helpers.php"
+      "../Common/src/helpers.php"
     ]
   },
   "extra": {

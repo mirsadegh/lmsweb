@@ -19,6 +19,7 @@
         "laravel/ui": "^3.0",
         "sadegh/common": "dev-master",
         "sadegh/front": "dev-master",
+        "sadegh/payment": "dev-master",
         "spatie/laravel-permission": "^3.17"
     },
     "require-dev": {
@@ -37,6 +38,9 @@
         {
             "type": "path",
             "url": "./modules/Sadegh/front/"
+        },{
+            "type": "path",
+            "url": "./modules/Sadegh/Payment/"
         }
     ],
 

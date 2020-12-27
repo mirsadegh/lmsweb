@@ -22,10 +22,11 @@ function modal(modalID, size = null, btn, func = null) {
 
 function showImage() {
     var imgsrc = $('.tutor-avatar-img').attr('src');
-    console.log(imgsrc)
+    // console.log(imgsrc)
     $('.modal-body img').attr('src', imgsrc);
 }
 showImage()
 
 modal('#Modal1', '800px', '#tutor-image')
 modal('#Modal2', '1000px', '.btn-answer')
+modal('#Modal-buy', '1000px', '.btn-buy')

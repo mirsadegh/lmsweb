@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="fa">
 @include('Front::layout.head')
-<body >
+<body>
 @include('Front::layout.header')
   @yield('content')
 @include('Front::layout.footer')

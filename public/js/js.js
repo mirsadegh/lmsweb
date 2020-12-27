@@ -133,6 +133,7 @@ function progressbar(slideId) {
     function frame() {
         if (width >= 100) {
             clearInterval(pt);
+
             items[slideId].style.width = '0%';
             slideIndex++;
             slideIndex = slideShow(slideIndex);

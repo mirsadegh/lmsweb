@@ -1,0 +1,17 @@
+{
+  "name": "sadegh/payment",
+  "autoload": {
+    "psr-4": {
+      "Sadegh\\Payment\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "\\Sadegh\\Payment\\Providers\\PaymentServiceProvider"
+      ]
+    }
+  }
+}
+
+

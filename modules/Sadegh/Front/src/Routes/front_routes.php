@@ -4,6 +4,7 @@ Route::group(['middleware' => ['web'], 'namespace' => 'Sadegh\Front\Http\Control
     function ($router) {
         $router->get('/', 'FrontController@index');
         $router->get('/c-{slug}', 'FrontController@singleCourse')->name('singleCourse');
+        $router->get('/tutors/{username}', 'FrontController@singleTutor')->name('singleTutor');
     });
 
 

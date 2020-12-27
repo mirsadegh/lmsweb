@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use Sadegh\Course\Repositories\CourseRepo;
 use Sadegh\Course\Repositories\LessonRepo;
+use Sadegh\RolePermissions\Models\Permission;
+use Sadegh\User\Models\User;
 
 class FrontController extends Controller
 {
@@ -32,5 +34,11 @@ class FrontController extends Controller
     public function extractId($slug,$key)
     {
         return  Str::before(Str::after($slug,$key.'-'),'-');
+    }
+
+    public function singleTutor($username)
+    {
+      $tutor = User::permission(Permission::PERMISSION_TEACH)->where('username',$username)->first();
+      return view('Front::tutor',compact('tutor'));
     }
 }

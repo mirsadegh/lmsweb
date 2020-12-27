@@ -53,6 +53,7 @@ class Course extends Model
     }
 
     public function seasons()
+
     {
         return $this->hasMany(Season::class);
 
@@ -79,6 +80,26 @@ class Course extends Model
     public function getFormattedPrice()
     {
         return number_format($this->price);
+    }
+    public function getDiscountPercent()
+    {
+        //todo
+        return 0;
+    }
+    public function getDiscountAmount()
+    {
+        //todo
+        return 0;
+    }
+    public function getFinalPrice()
+    {
+
+        return $this->price - $this->getDiscountAmount();
+    }
+    public function getFormattedFinalPrice()
+    {
+
+        return number_format($this->getFinalPrice());
     }
 
     public function path()
