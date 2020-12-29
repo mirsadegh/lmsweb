@@ -3,6 +3,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/test', function () {
 
+
+//        $gateway = resolve(\Sadegh\Payment\Gateways\Gateway::class);
+//
+//        $payment = new \Sadegh\Payment\Models\Payment();
+//        $gateway->request($payment);
+
 //    \Spatie\Permission\Models\Permission::create(['name' => 'manage role_permissions']);
 //    auth()->user()->givePermissionTo(\Sadegh\RolePermissions\Models\Permission::PERMISSION_SUPER_ADMIN);
      return auth()->user()->assignRole('teacher');

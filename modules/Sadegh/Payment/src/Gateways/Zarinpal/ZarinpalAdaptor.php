@@ -2,27 +2,29 @@
 
 namespace Sadegh\Payment\Gateways\Zarinpal;
 
-use Sadegh\Payment\Contracts\Gateway;
+use Illuminate\Http\Request;
+use Sadegh\Payment\Contracts\GatewayContract;
 use Sadegh\Payment\Models\Payment;
+use Sadegh\Payment\Repositories\PaymentRepo;
 
-class ZarinpalAdaptor implements Gateway
+class ZarinpalAdaptor implements GatewayContract
 {
-
-    public function request(Payment $payment)
+    private $url;
+    private $client;
+    public function request( $amount , $description)
     {
-        $zp = new zarinpal();
-        $callback = "";
-         $result =  $zp->request("*****",$payment->amount,$payment->paymentable->title,"","",$callback);
+         $this->client = new zarinpal();
+         $callback = route("payments.callback");
+         $result =  $this->client->request("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", $amount, $description ,"","",$callback,true);
         if (isset($result["Status"]) && $result["Status"] == 100)
         {
+            $this->url = $result['StartPay'];
             return $result['Authority'];
-            // Success and redirect to pay
-//            $zp->redirect($result["StartPay"]);
         } else {
-            // error
-            echo "خطا در ایجاد تراکنش";
-            echo "<br />کد خطا : ". $result["Status"];
-            echo "<br />تفسیر و علت خطا : ". $result["Message"];
+            return [
+                "status" => $result["Status"],
+                "message" => $result["Message"]
+            ];
         }
 
 
@@ -30,6 +32,33 @@ class ZarinpalAdaptor implements Gateway
 
     public function verify(Payment $payment)
     {
-        // TODO: Implement verify() method.
+
+       $this->client = new zarinpal();
+       $result =   $this->client->verify("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",$payment->amount,true);
+
+        if (isset($result["Status"]) && $result["Status"] == 100)
+        {
+            return  $result["RefID"];
+        } else {
+            return [
+                'status' => $result["Status"],
+                'message' => $result["Message"]
+            ];
+        }
+
+    }
+
+    public function redirect()
+    {
+      $this->client->redirect($this->url);
+    }
+
+    public function getName()
+    {
+       return 'zarinpal';
+    }
+    public function getInvoiceIdFromRequest(Request $request)
+    {
+        return $request->Authority;
     }
 }

@@ -12,8 +12,8 @@ use Sadegh\Course\Models\Course;
 use Sadegh\Course\Repositories\CourseRepo;
 use Sadegh\Course\Repositories\LessonRepo;
 use Sadegh\Media\Services\MediaFileServiece;
+use Sadegh\Payment\Gateways\Gateway;
 use Sadegh\Payment\Services\PaymentServices;
-use Sadegh\Payment\src\Repositories\PaymentRepo;
 use Sadegh\RolePermissions\Models\Permission;
 use Sadegh\User\Repositories\UserRepo;
 
@@ -140,6 +140,8 @@ class CourseController extends Controller
 
         $amount = $course->getFormattedFinalPrice();
         $payment = PaymentServices::generate($amount,$course,auth()->user());
+
+        resolve(Gateway::class)->redirect($payment->invoice_id);
 
     }
 
