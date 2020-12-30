@@ -3,8 +3,10 @@
 namespace Sadegh\Payment\Providers;
 
 use Carbon\Laravel\ServiceProvider;
+use Sadegh\Course\Models\Course;
 use Sadegh\Payment\Gateways\Gateway;
 use Sadegh\Payment\Gateways\Zarinpal\ZarinpalAdaptor;
+use Sadegh\Payment\Models\Payment;
 
 class PaymentServiceProvider extends ServiceProvider
 {
@@ -21,5 +23,9 @@ class PaymentServiceProvider extends ServiceProvider
       $this->app->singleton(Gateway::class,function ($app){
          return new ZarinpalAdaptor();
       });
+//
+//         Course::resolveRelationUsing("payments",function ($courseModal){
+//             return $courseModal->morphMany(Payment::class , "paymentable" );
+//         });
     }
 }

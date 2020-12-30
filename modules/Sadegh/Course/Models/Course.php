@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Sadegh\Category\Models\Category;
 use Sadegh\Course\Repositories\CourseRepo;
 use Sadegh\Media\Models\Media;
+use Sadegh\Payment\Models\Payment;
 use Sadegh\User\Models\User;
 
 /**
@@ -62,6 +63,11 @@ class Course extends Model
     public function lessons()
     {
         return $this->hasMany(Lesson::class);
+    }
+
+    public function payments()
+    {
+        return $this->morphMany(Payment::class,"paymentable");
     }
 
     public function getDuration()

@@ -131,17 +131,24 @@ class CourseController extends Controller
     {
         $course = $courseRepo->findById($courseId);
 
+
+
         if (!$this->courseCanBePruchased($course)) {
             return back();
         }
+
         if (!$this->authUserCanPurchaseCourse($course)) {
             return back();
         }
 
         $amount = $course->getFormattedFinalPrice();
-        $payment = PaymentServices::generate($amount,$course,auth()->user());
 
-        resolve(Gateway::class)->redirect($payment->invoice_id);
+//        $payment = PaymentServices::generate($amount,$course,auth()->user());
+
+         $payment = PaymentServices::createPay($amount,$course,auth()->user());
+
+
+//        resolve(Gateway::class)->redirect($payment->invoice_id);
 
     }
 
