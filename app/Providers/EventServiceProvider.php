@@ -6,8 +6,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
-use Sadegh\Course\Listeners\RegisterUserInTheCourse;
-use Sadegh\Payment\Events\PaymentWasSuccessful;
+
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -20,9 +19,7 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        PaymentWasSuccessful::class =>[
-            RegisterUserInTheCourse::class
-        ]
+
     ];
 
     /**

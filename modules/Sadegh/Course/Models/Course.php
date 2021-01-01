@@ -75,6 +75,11 @@ class Course extends Model
         return (new CourseRepo())->getDuration($this->id);
     }
 
+    public function hasStudent($student_id)
+    {
+       return resolve(CourseRepo::class)->hasStudent($this,$student_id);
+    }
+
     public function formattedDuration()
     {
         $duration = $this->getDuration();
@@ -82,6 +87,7 @@ class Course extends Model
         $m = ($duration % 60 ) <10 ? '0'. ($duration % 60 ) : ($duration % 60 );
         return $h . ':' . $m . ":00";
     }
+
 
     public function getFormattedPrice()
     {
@@ -99,12 +105,10 @@ class Course extends Model
     }
     public function getFinalPrice()
     {
-
         return $this->price - $this->getDiscountAmount();
     }
     public function getFormattedFinalPrice()
     {
-
         return number_format($this->getFinalPrice());
     }
 
@@ -121,7 +125,15 @@ class Course extends Model
     public function shortUrl()
     {
         return route('singleCourse', $this->id );
+    }
 
+    public function downloadLinks() :array
+    {
+        $links = [];
+        foreach (resolve(CourseRepo::class)->getLessons($this->id) as $lesson){
+            $links[] = $lesson->downloadLink();
+        }
+        return $links;
     }
 
 }

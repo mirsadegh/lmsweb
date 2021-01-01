@@ -83,6 +83,15 @@ class CourseController extends Controller
         return view('Courses::details', compact('course', 'lessons'));
     }
 
+    public function downloadLinks($id,CourseRepo $courseRepo)
+    {
+        $course = $courseRepo->findById($id);
+        $this->authorize("download",$course);
+
+        return implode("<br>", $course->downloadLinks())   ;
+
+    }
+
     public function destroy($id, CourseRepo $courseRepo)
     {
         $course = $courseRepo->findById($id);
@@ -143,6 +152,12 @@ class CourseController extends Controller
 
         $amount = $course->getFormattedFinalPrice();
 
+        if ($amount <= 0){
+            $courseRepo->addStudentToCourse($course,auth()->id());
+            newFeedback("عملیات موفقیت","شما با موفقیت در دوره ثبت نام کردید.");
+            return redirect($course->path());
+        }
+
 //        $payment = PaymentServices::generate($amount,$course,auth()->user());
 
          $payment = PaymentServices::createPay($amount,$course,auth()->user());
@@ -177,7 +192,7 @@ class CourseController extends Controller
             newFeedback('عملیات ناموفق', 'شما مدرس این دوره هستید!', "eror");
             return false;
         }
-        if (auth()->user()->hasAccessToCourse($course)) {
+        if (auth()->user()->can('download',$course)) {
             newFeedback('عملیات ناموفق', 'شما این دوره را قبلا خریده اید!', "eror");
             return false;
         }

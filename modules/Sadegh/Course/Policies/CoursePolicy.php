@@ -3,6 +3,8 @@
 namespace Sadegh\Course\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Sadegh\Course\Models\Course;
+use Sadegh\Course\Repositories\CourseRepo;
 use Sadegh\RolePermissions\Models\Permission;
 use Sadegh\User\Models\User;
 
@@ -95,4 +97,15 @@ class CoursePolicy
             return true;
         }
     }
+
+    public function download($user, $course)
+    {
+        if ($user->hasPermissionTo(Permission::PERMISSION_MANAGE_COURSES) ||
+            ($user->id === $course->teacher_id) ||
+            $course->hasStudent($user->id)
+        ) return true;
+        return false;
+    }
+
+
 }
